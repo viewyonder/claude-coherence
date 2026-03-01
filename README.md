@@ -67,8 +67,8 @@ Then customize manually:
 | `test-gate.cjs` | Blocking | Block commits without tests |
 | `data-isolation.cjs` | Warning | Warn on unfiltered DB queries |
 | `delegation-check.js` | Warning | Warn on inline business logic |
-| `style-guard.cjs` | Warning | Enforce prose style and formatting rules |
 | `terminology-check.cjs` | Warning | Enforce consistent terminology |
+| `style-guard.cjs` | Warning | Enforce voice, tone, and structure rules |
 | `state-flow.cjs` | Blocking/Warning | Enforce unidirectional state |
 | `test-suggest.cjs` | Informational | Suggest running related tests |
 | `change-suggest.cjs` | Informational | Suggest related actions |
@@ -80,8 +80,8 @@ Then customize manually:
 | `architecture-reviewer` | Compliance check against CLAUDE.md principles |
 | `drift-detector` | Compare SPEC docs against codebase reality |
 | `code-reviewer` | Quality, security, and best practices review |
-| `consistency-reviewer` | Terminology, voice, and structural consistency |
 | `security-auditor` | OWASP-focused vulnerability detection |
+| `consistency-reviewer` | Terminology, voice, and structural consistency |
 
 ### Skills (4 included)
 

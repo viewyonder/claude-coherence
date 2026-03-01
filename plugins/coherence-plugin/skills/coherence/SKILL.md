@@ -19,6 +19,56 @@ You are running the Coherence setup wizard. Your job is to guide the user throug
 
 ---
 
+## Pre-Phase: Dogfood Detection
+
+Before starting the wizard, check whether you are running inside the coherence repo itself. Check **all four** of these conditions:
+
+1. `plugins/coherence-plugin/` directory exists
+2. `template/.claude/hooks/` directory exists
+3. `marketplace.json` exists at the repository root
+4. `CLAUDE.md` contains the phrase "template system for encoding architectural constraints"
+
+**If all four are true** → skip the wizard entirely and run **Dogfood Validation Mode** (described below).
+**Otherwise** → proceed to Phase 0 normally.
+
+### Dogfood Validation Mode
+
+This is a read-only validation of the coherence repo's own templates, hooks, examples, and documentation. Do not generate or modify any files. Run each check below and produce a structured report.
+
+#### Checks
+
+| # | Check | What to Do |
+|---|-------|------------|
+| 1 | **Hook Syntax** | Run `node -c` on every `.cjs` and `.js` file in `template/.claude/hooks/`. Report PASS/FAIL per file. |
+| 2 | **Template Structure** | Verify that all files referenced in the SKILL.md archetype templates (settings.local.json, CLAUDE.md, each hook, each agent, each skill) have corresponding template files in `template/.claude/`. Report missing files. |
+| 3 | **README Accuracy** | Count actual hooks, agents, and skills in `template/.claude/` and compare against the counts and names listed in `README.md`. Report any mismatches. |
+| 4 | **Example Consistency** | For each example in `examples/`: run `node -c` on all `.cjs`/`.js` hooks, and verify their `CLAUDE.md` contains zero `{{PLACEHOLDER}}` markers. Report PASS/FAIL per example. |
+| 5 | **Plugin Structure** | Validate that `plugin.json` (if present) and both `marketplace.json` files (root and `.claude-plugin/`) are valid JSON with matching `name` fields. Report any parse errors or mismatches. |
+| 6 | **SKILL.md Consistency** | Verify that the plugin copy (`plugins/coherence-plugin/skills/coherence/SKILL.md`) and the template copy (`template/.claude/skills/coherence/SKILL.md`) are identical. Report any differences. |
+
+#### Output Format
+
+Present results as a structured report:
+
+```
+Coherence Dogfood Validation Report
+====================================
+
+1. Hook Syntax .............. PASS | FAIL (N issues)
+2. Template Structure ....... PASS | FAIL (N missing)
+3. README Accuracy .......... PASS | FAIL (N mismatches)
+4. Example Consistency ...... PASS | FAIL (N issues)
+5. Plugin Structure ......... PASS | FAIL (N issues)
+6. SKILL.md Consistency ..... PASS | FAIL
+
+Issues:
+- [list any failures with details]
+```
+
+After producing the report, stop. Do not proceed to Phase 0 or any wizard phases.
+
+---
+
 ## Phase 0: Project Scan
 
 Before asking any questions, silently scan the project to inform your questions.

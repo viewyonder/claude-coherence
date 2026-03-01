@@ -30,7 +30,7 @@ Hooks are Node.js scripts (`.cjs`/`.js`) that read JSON from stdin and communica
 
 Each hook has a `// === CONFIGURATION ===` block at the top with project-specific constants. Hooks are registered in `settings.local.json` under `PreToolUse` (Edit/Write/Bash matchers) or `PostToolUse`.
 
-Three enforcement levels: 4 blocking hooks (forbidden-imports, required-prefix, boundary-guard, test-gate), 2 warning hooks (data-isolation, delegation-check), 3 informational hooks (test-suggest, change-suggest, state-flow).
+Three enforcement levels: 4 blocking hooks (forbidden-imports, required-prefix, boundary-guard, test-gate), 4 warning hooks (data-isolation, delegation-check, terminology-check, style-guard), 3 informational hooks (test-suggest, change-suggest, state-flow).
 
 ## Testing Hooks
 
@@ -47,3 +47,4 @@ No output = allowed. JSON output = blocked/warned.
 - Agents are read-only (Read, Grep, Glob, Bash only — no Write/Edit access)
 - SPEC documents make falsifiable claims ("we have 18 inspectors") not opinions ("our API is well-designed")
 - When adding a new hook: create the `.cjs` file, add a `// === CONFIGURATION ===` block, register it in `settings.local.json`
+- Running `/coherence` inside this repo triggers dogfood mode — a read-only validation of templates, hooks, examples, and documentation accuracy
