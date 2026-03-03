@@ -10,7 +10,7 @@ All skill functionality is unified under a single `/coherence` command with sub-
 
 ## Components
 
-There is 1 skill with 7 sub-commands.
+There is 1 skill with 9 sub-commands.
 
 ### Sub-commands
 
@@ -20,6 +20,8 @@ There is 1 skill with 7 sub-commands.
 | `/coherence check-principles [path]` | `architecture-reviewer` agent | Compliance check against CLAUDE.md principles |
 | `/coherence check-drift [scope]` | `drift-detector` agent | Compare SPEC docs against codebase |
 | `/coherence test [scope]` | None (runs test command directly) | Run tests with flexible scope |
+| `/coherence hook` | None (reads config files) | List installed hooks with enforcement levels and status |
+| `/coherence spec` | None (reads SPEC files) | List SPEC documents with verification metadata |
 | `/coherence status [--prune]` | None (reads config files) | Show install state and registry contents |
 | `/coherence uninstall [--force]` | None (modifies config files) | Remove Coherence from current repo (and optionally global) |
 | `/coherence help` | None | Show available sub-commands |

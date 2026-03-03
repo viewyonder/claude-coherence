@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2026-03-03
+
+### Added
+
+- **`/coherence hook` sub-command.** Read-only report of all installed hooks — parses `settings.local.json`, checks file existence, reads JSDoc headers for enforcement level (BLOCK/WARN/INFO) and purpose. Groups by PreToolUse/PostToolUse and matcher.
+- **`/coherence spec` sub-command.** Read-only report of all SPEC documents — scans `docs/SPEC-*.md`, reads verification metadata (last verified date, method), extracts one-line descriptions from Overview sections.
+- "Show Your Work" blog post explaining the rationale for inspection sub-commands
+
+### Changed
+
+- Updated SPEC-SKILLS.md sub-command count from 7 to 9
+- Bump version to 1.4.0
+
 ## [1.3.1] - 2026-03-03
 
 ### Changed

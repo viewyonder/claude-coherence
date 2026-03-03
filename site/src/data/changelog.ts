@@ -3,6 +3,12 @@
  * Edit the `text` fields to be human-friendly — these are displayed as-is.
  */
 export const changelog = [
+  // --- 2026-03-03 (v1.4.0) ---
+  { date: '2026-03-03', text: 'Add /coherence hook sub-command — list installed hooks with enforcement levels and file status' },
+  { date: '2026-03-03', text: 'Add /coherence spec sub-command — list SPEC documents with verification metadata' },
+  { date: '2026-03-03', text: 'Add "Show Your Work" blog post on the inspection sub-commands' },
+  { date: '2026-03-03', text: 'Bump version to 1.4.0' },
+
   // --- 2026-03-03 (v1.3.1) ---
   { date: '2026-03-03', text: 'Rename check-architecture to check-principles — name now reflects what the sub-command actually checks' },
   { date: '2026-03-03', text: 'Add "Names Are Load-Bearing" blog post on the rename rationale' },
