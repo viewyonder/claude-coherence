@@ -196,12 +196,12 @@ The final layer integrates architectural compliance into the workflow itself. We
 - `/add-test` — Creates tests following project patterns for a specific file or feature.
 
 **Operational skills** run predefined workflows:
-- `/coherence test` — Flexible test runner with scope control (all, inspector-specific, API, integration, E2E).
+- `/coherence test-runner` — Flexible test runner with scope control (all, inspector-specific, API, integration, E2E).
 - `/benchmark` — Detection rate benchmarks against payload sets with baseline comparison.
 
 **Audit skills** invoke review agents:
 - `/coherence check-drift` — Invokes the drift detector agent. Accepts scope: `inspectors`, `api`, `stores`, `architecture`, or `all`.
-- `/coherence check-architecture` — Invokes the architecture reviewer agent against staged changes or a specific path.
+- `/coherence check-principles` — Invokes the architecture reviewer agent against staged changes or a specific path.
 
 The `/add-inspector` skill deserves particular attention because it demonstrates *architecture by construction*. When an agent creates a new inspector, the process includes updating the specification registry as Step 5 of 6 — between creating tests and running verification. Not as an afterthought. Not as a separate task that can be forgotten. It's part of the same operation that creates the code.
 
@@ -215,7 +215,7 @@ We've extracted the system into a [companion template](https://github.com/viewyo
 
 - **9 generalized hooks** with configuration blocks at the top of each file. Swap the path patterns and constraint definitions for your project's conventions. The forbidden-imports hook ships with Node.js/Bun/Deno patterns; the route-prefix hook takes your prefix as a constant; the boundary-guard hook takes your module paths and forbidden patterns.
 - **4 universal agents** (architecture reviewer, drift detector, code reviewer, security auditor) with project-agnostic prompts. They reference your CLAUDE.md principles rather than hardcoded rules.
-- **A unified `/coherence` skill** with sub-commands (`check-drift`, `check-architecture`, `test`) ready to invoke.
+- **A unified `/coherence` skill** with sub-commands (`check-drift`, `check-principles`, `test-runner`) ready to invoke.
 - **A template CLAUDE.md** with `{{PLACEHOLDER}}` markers for your project name, runtime, deployment target, and architectural principles.
 - **A SPEC document template** with the "Last verified" header pattern and falsifiable claim structure.
 - **Two worked examples** (Express + PostgreSQL, Next.js + Prisma) showing how the same hooks adapt to different stacks.
