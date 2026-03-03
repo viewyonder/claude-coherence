@@ -3,6 +3,14 @@
  * Edit the `text` fields to be human-friendly — these are displayed as-is.
  */
 export const changelog = [
+  // --- 2026-03-03 (v1.2.0) ---
+  { date: '2026-03-03', text: 'Consolidate all skills under /coherence with sub-commands: init, check-drift, check-architecture, test, help' },
+  { date: '2026-03-03', text: 'Wizard-generated projects now produce a single unified skill instead of three separate skills' },
+  { date: '2026-03-03', text: 'Update all SPEC docs, READMEs, blog posts, and site pages to reflect new command names' },
+  { date: '2026-03-03', text: 'Add "One Command to Rule Them All" blog post explaining the consolidation' },
+  { date: '2026-03-03', text: 'Add CHANGELOG.md to repository root' },
+  { date: '2026-03-03', text: 'Bump version to 1.2.0' },
+
   // --- 2026-02-25 ---
   { date: '2026-02-25', text: 'Separate install commands into individual code blocks' },
   { date: '2026-02-25', text: 'Update README to lead with plugin marketplace installation' },
