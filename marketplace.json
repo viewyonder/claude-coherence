@@ -6,7 +6,7 @@
     {
       "name": "coherence",
       "description": "Interactive setup wizard that generates a complete .claude/ guardrails system customized to your project.",
-      "version": "1.6.0",
+      "version": "1.6.1",
       "source": "./plugins/coherence-plugin",
       "homepage": "https://coherence.viewyonder.com"
     }

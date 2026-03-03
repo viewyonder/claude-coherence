@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.1] - 2026-03-03
+
+### Changed
+
+- **Updated README with all 11 sub-commands.** Added missing `hook`, `spec`, `config`, `status`, and `uninstall` to the Skills table. Added new "Sub-commands" section with descriptions, usage examples, and example output for every sub-command.
+- Bump version to 1.6.1
+
 ## [1.6.0] - 2026-03-03
 
 ### Added

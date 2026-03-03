@@ -90,16 +90,165 @@ Then customize manually:
 | `security-auditor` | OWASP-focused vulnerability detection |
 | `consistency-reviewer` | Terminology, voice, and structural consistency |
 
-### Skills (1 unified command)
+### Skills (1 unified command, 11 sub-commands)
 
-| Command | What It Does |
-|---------|--------------|
-| `/coherence init [--reset]` | Interactive setup wizard — generates a customized guardrails system |
-| `/coherence check-drift [scope]` | Invoke drift detector, compare specs against code |
-| `/coherence check-principles [path]` | Compliance review of staged changes or a path |
-| `/coherence test-runner [scope]` | Run tests with flexible scope control |
-| `/coherence history [options]` | View activity log, enable/disable hook logging |
-| `/coherence help` | Show available sub-commands |
+| Command | Category | What It Does |
+|---------|----------|--------------|
+| `/coherence init [--reset]` | Setup | Interactive wizard to generate full guardrails system |
+| `/coherence check-principles [path]` | Review | Architecture compliance check against CLAUDE.md |
+| `/coherence check-drift [scope]` | Review | SPEC vs. codebase drift detection |
+| `/coherence test-runner [scope]` | Testing | Run tests with scope control |
+| `/coherence hook` | Inspection | List hooks with enforcement levels and status |
+| `/coherence spec` | Inspection | List SPEC docs with verification metadata |
+| `/coherence config` | Inspection | Unified overview of entire `.claude/` setup |
+| `/coherence history [options]` | Logging | View/control activity log |
+| `/coherence status [--prune]` | Global | Show global install state and repo registry |
+| `/coherence uninstall [--force]` | Global | Remove Coherence from current repo |
+| `/coherence help` | Meta | Show available sub-commands |
+
+---
+
+## Sub-commands
+
+### `/coherence init [--reset]`
+
+Interactive setup wizard that generates a complete `.claude/` guardrails system customized to your project — hooks, agents, skills, `CLAUDE.md`, and `settings.local.json`.
+
+```
+/coherence init           # First-time setup
+/coherence init --reset   # Re-run wizard, regenerate everything
+```
+
+### `/coherence check-principles [path]`
+
+Architecture compliance check against the principles defined in your `CLAUDE.md`. Invokes the architecture-reviewer agent to validate code against security, boundary, performance, and propagation principles.
+
+```
+/coherence check-principles              # Check staged changes
+/coherence check-principles src/api/     # Check a specific path
+```
+
+### `/coherence check-drift [scope]`
+
+Compare SPEC documents against the actual codebase to detect architectural drift. Invokes the drift-detector agent, which reads every SPEC document and reports items as CURRENT, DRIFTED, or UNDOCUMENTED.
+
+```
+/coherence check-drift                   # Check all SPEC docs
+/coherence check-drift SPEC-API.md       # Check a specific SPEC
+```
+
+### `/coherence test-runner [scope]`
+
+Run tests with flexible scope control — all tests, a specific module, or a custom filter.
+
+```
+/coherence test-runner                   # Run all tests
+/coherence test-runner auth              # Run tests matching "auth"
+```
+
+### `/coherence hook`
+
+List all installed Coherence hooks with their enforcement levels, tool matchers, and file status. Shows hooks grouped by execution phase (PreToolUse/PostToolUse) with active, orphaned, and missing status indicators.
+
+```
+/coherence hook
+```
+
+Example output:
+
+```
+PreToolUse (6 hooks):
+  Edit, Write:
+    ● forbidden-imports.cjs    BLOCK   Block runtime-inappropriate APIs
+    ● boundary-guard.cjs       BLOCK   Enforce module boundaries
+    ● data-isolation.cjs       WARN    Warn on unfiltered DB queries
+  Bash:
+    ● test-gate.cjs            BLOCK   Block commits without tests
+```
+
+### `/coherence spec`
+
+List all SPEC documents with verification metadata — last verified date, verified by, and a one-line description extracted from each document's header.
+
+```
+/coherence spec
+```
+
+Example output:
+
+```
+Found 3 SPEC documents in docs/:
+
+  SPEC-HOOKS.md          verified 2026-02-25   Hook system (11 hooks, 3 tiers)
+  SPEC-SKILLS.md         verified 2026-03-03   Skill system (1 skill, 11 sub-commands)
+  SPEC-API.md            verified 2026-02-20   API endpoints and routes
+```
+
+### `/coherence config`
+
+Unified overview of your project's entire `.claude/` setup — hooks (with active/orphaned/missing status), agents, skills, SPEC documents, and project files like `CLAUDE.md`.
+
+```
+/coherence config
+```
+
+Example output:
+
+```
+Hooks (.claude/hooks/):
+  ● forbidden-imports.cjs     active
+  ● boundary-guard.cjs        active
+  4 active, 0 orphaned, 0 missing
+
+Agents: 5   Skills: 1   SPECs: 3 (+ template)
+CLAUDE.md: found, configured
+```
+
+### `/coherence history [options]`
+
+View the activity log recorded by hooks, or enable/disable hook logging.
+
+```
+/coherence history                       # Show recent activity
+/coherence history --enable              # Turn on hook logging
+/coherence history --disable             # Turn off hook logging
+```
+
+### `/coherence status [--prune]`
+
+Show global Coherence install state — plugin config, registered repos, and stale entries. Useful for managing Coherence across multiple projects.
+
+```
+/coherence status                        # Show install state
+/coherence status --prune                # Remove stale registry entries
+```
+
+Example output:
+
+```
+Registered Repos (2 total, 0 stale):
+  ✓ /path/to/repo-1         registered 2026-01-15
+  ✓ /path/to/repo-2         registered 2026-02-20
+```
+
+### `/coherence uninstall [--force]`
+
+Remove Coherence hook registrations from the current repo. Does **not** delete `.claude/hooks/`, `.claude/agents/`, `.claude/skills/`, or `CLAUDE.md` — those contain your customizations.
+
+```
+/coherence uninstall                     # Remove from current repo
+/coherence uninstall --force             # Also remove global config
+```
+
+If other repos still use Coherence, global config is left intact unless `--force` is passed.
+
+### `/coherence help`
+
+Show all available sub-commands with brief descriptions.
+
+```
+/coherence help
+```
 
 ---
 
