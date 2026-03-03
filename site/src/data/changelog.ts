@@ -3,6 +3,14 @@
  * Edit the `text` fields to be human-friendly — these are displayed as-is.
  */
 export const changelog = [
+  // --- 2026-03-03 (v1.3.0) ---
+  { date: '2026-03-03', text: 'Add /coherence status sub-command — show install state, registered repos, and stale entries' },
+  { date: '2026-03-03', text: 'Add /coherence uninstall sub-command — clean local hooks and optionally remove global config' },
+  { date: '2026-03-03', text: 'Add repo registry (~/.claude/coherence/repos.json) to track installations across repos' },
+  { date: '2026-03-03', text: 'Add Phase 7 (Register) to init wizard — repos auto-register after setup' },
+  { date: '2026-03-03', text: 'Add "Clean Exits" blog post on the uninstall lifecycle' },
+  { date: '2026-03-03', text: 'Bump version to 1.3.0' },
+
   // --- 2026-03-03 (v1.2.1) ---
   { date: '2026-03-03', text: 'Add missing Consistency Reviewer to homepage agent cards' },
   { date: '2026-03-03', text: 'Show all 5 /coherence sub-commands on homepage' },
