@@ -197,6 +197,28 @@ These SPEC docs are the **authoritative source of truth** for the codebase. They
 
 ---
 
+## Knowledge Base (QMD)
+
+<!-- Optional: If this project is indexed in QMD (https://github.com/tobi/qmd), -->
+<!-- uncomment and customize the section below. Remove this section if not using QMD. -->
+
+<!--
+This project is indexed in QMD as collection `{{QMD_COLLECTION_NAME}}`.
+
+Use `qmd search` or `qmd query` via Bash to find relevant documentation, design
+decisions, and context across the project's markdown files — especially before
+planning features or investigating unfamiliar areas. QMD semantic search finds
+conceptually related documents even when terminology differs from what you'd grep for.
+
+```bash
+qmd search "topic" -c {{QMD_COLLECTION_NAME}}      # Fast keyword search
+qmd query "question" -c {{QMD_COLLECTION_NAME}}     # Hybrid + reranking (best quality)
+qmd search "topic" --all --files --min-score 0.3    # Cross-project search
+```
+-->
+
+---
+
 ## Documentation Index
 
 | Doc | Purpose |

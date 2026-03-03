@@ -68,6 +68,16 @@ This agent is invoked by the `/check-drift` skill. Arguments:
 - Specific component type (e.g., `api`, `models`, `stores`)
 - `all` (default) — Check everything
 
+## Optional: QMD Search
+
+If the project is indexed in QMD (`qmd status` shows collections), use it to supplement Grep/Glob when verifying SPEC claims. QMD semantic search can find implementations that match a concept but use different terminology than the SPEC:
+
+```bash
+qmd search "claim keywords" -c <collection> --json -n 10
+```
+
+This is especially useful for verifying broad claims like "all routes validate input" where exact-match grep may miss implementations using different naming.
+
 ## Key Distinction
 
 **DRIFTED vs UNDOCUMENTED:**
