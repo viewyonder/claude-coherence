@@ -2,8 +2,8 @@
 title: "The Whole Picture"
 subtitle: "A new /coherence config sub-command that shows everything installed in one view"
 date: 2026-03-03
-author: Injectionator
-template: https://github.com/viewyonder/coherence
+author: "Injectionator"
+draft: false
 ---
 
 # The Whole Picture

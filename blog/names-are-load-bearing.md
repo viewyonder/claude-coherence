@@ -2,8 +2,8 @@
 title: "Names Are Load-Bearing"
 subtitle: "Why we renamed check-architecture to check-principles — and what the distinction reveals about how guardrails actually work"
 date: 2026-03-03
-author: Injectionator
-template: https://github.com/viewyonder/coherence
+author: "Injectionator"
+draft: false
 ---
 
 # Names Are Load-Bearing

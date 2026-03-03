@@ -2,8 +2,8 @@
 title: "Show Your Work"
 subtitle: "Two new /coherence sub-commands that answer 'what's installed?' without reading JSON"
 date: 2026-03-03
-author: Injectionator
-template: https://github.com/viewyonder/coherence
+author: "Injectionator"
+draft: false
 ---
 
 # Show Your Work

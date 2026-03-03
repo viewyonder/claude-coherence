@@ -2,8 +2,8 @@
 title: "Clean Exits"
 subtitle: "Why every plugin needs an uninstall story — and how Coherence v1.3 closes the lifecycle gap"
 date: 2026-03-03
-author: Injectionator
-template: https://github.com/viewyonder/coherence
+author: "Injectionator"
+draft: false
 ---
 
 # Clean Exits

@@ -2,8 +2,8 @@
 title: "One Command to Rule Them All"
 subtitle: "Why we consolidated four slash commands into /coherence with sub-commands — and what it means for your workflow"
 date: 2026-03-03
-author: Injectionator
-template: https://github.com/viewyonder/coherence
+author: "Injectionator"
+draft: false
 ---
 
 # One Command to Rule Them All

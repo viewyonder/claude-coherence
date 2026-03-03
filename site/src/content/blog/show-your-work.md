@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+# Show Your Work
+
 *Two new `/coherence` sub-commands that answer "what's installed?" without reading JSON.*
 
 ---
@@ -72,17 +74,18 @@ This is deliberate. The existing sub-commands already cover modification: `init`
 
 ## The Sub-command Count
 
-With `hook` and `spec`, Coherence now has ten sub-commands:
+With `hook` and `spec`, Coherence now has eleven sub-commands:
 
 | Command | What It Does |
 |---------|--------------|
 | `init` | Setup wizard |
 | `check-principles` | Architecture compliance review |
 | `check-drift` | SPEC drift detection |
-| `test` | Run tests |
+| `test-runner` | Run tests |
 | `hook` | List installed hooks |
 | `spec` | List SPEC documents |
 | `config` | Show project configuration |
+| `history` | Show activity log |
 | `status` | Show install state |
 | `uninstall` | Remove Coherence |
 | `help` | Show available commands |

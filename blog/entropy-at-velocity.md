@@ -2,8 +2,8 @@
 title: "Entropy at Velocity"
 subtitle: "How AI-assisted development shifts the bottleneck from writing code to keeping it coherent — and what you can do about it"
 date: 2026-02-23
-author: Injectionator
-template: https://github.com/viewyonder/coherence
+author: "Injectionator"
+draft: false
 ---
 
 # Entropy at Velocity
