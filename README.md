@@ -98,6 +98,7 @@ Then customize manually:
 | `/coherence check-drift [scope]` | Invoke drift detector, compare specs against code |
 | `/coherence check-principles [path]` | Compliance review of staged changes or a path |
 | `/coherence test-runner [scope]` | Run tests with flexible scope control |
+| `/coherence history [options]` | View activity log, enable/disable hook logging |
 | `/coherence help` | Show available sub-commands |
 
 ---

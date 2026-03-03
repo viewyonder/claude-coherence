@@ -39,6 +39,7 @@ const CHECK_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.vue', '.svelte'];
 // === END CONFIGURATION ===
 
 const fs = require('fs');
+const { logEvent } = require('./_log.cjs');
 
 let input = '';
 process.stdin.setEncoding('utf8');
@@ -106,6 +107,7 @@ process.stdin.on('end', () => {
     }
 
     if (violations.length > 0) {
+      logEvent('state-flow', 'BLOCK', filePath, violations[0]);
       const result = {
         decision: 'block',
         reason: `State flow violation:\n${violations.map((v, i) => `${i + 1}. ${v}`).join('\n')}\n\nPrinciple: State flows one direction: Store -> View. (CLAUDE.md)`,
@@ -115,6 +117,7 @@ process.stdin.on('end', () => {
     }
 
     if (warnings.length > 0) {
+      logEvent('state-flow', 'WARN', filePath, warnings[0]);
       const result = {
         message: `State flow warning:\n${warnings.join('\n')}`,
       };

@@ -30,6 +30,7 @@ const SKIP_PATTERNS = ['.test.', '.spec.', '.d.ts', '__tests__/'];
 // === END CONFIGURATION ===
 
 const fs = require('fs');
+const { logEvent } = require('./_log.cjs');
 
 const input = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
 const filePath = input.tool_input?.file_path || '';
@@ -64,6 +65,7 @@ while ((match = DB_CALL_PATTERN.exec(newContent)) !== null) {
 }
 
 if (warnings.length > 0) {
+  logEvent('data-isolation', 'WARN', filePath, `${warnings.length} query(s) may lack tenant filter`);
   // Warn but don't block — some queries are legitimately global (admin, stats)
   const result = {
     message: `Data isolation warning:\n${warnings.join('\n')}`,

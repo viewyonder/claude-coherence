@@ -35,6 +35,8 @@ const UNVALIDATED_INPUT_PATTERNS = {
 };
 // === END CONFIGURATION ===
 
+const { logEvent } = require('./_log.cjs');
+
 let input = '';
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', (chunk) => { input += chunk; });
@@ -111,6 +113,7 @@ process.stdin.on('end', () => {
     }
 
     if (warnings.length > 0) {
+      logEvent('delegation-check', 'WARN', filePath, warnings.map(w => w.rule).join(', '));
       const result = {
         message: `API delegation warning:\n${warnings.map((w, i) => `${i + 1}. [${w.rule}] ${w.message}\n   Fix: ${w.fix}`).join('\n')}`,
       };

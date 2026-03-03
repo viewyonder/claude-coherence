@@ -45,6 +45,7 @@ const SKIP_EXTENSIONS = [
 // === END CONFIGURATION ===
 
 const fs = require('fs');
+const { logEvent } = require('./_log.cjs');
 
 const input = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
 const filePath = input.tool_input?.file_path || '';
@@ -69,6 +70,7 @@ for (const { pattern, message } of FORBIDDEN_PATTERNS) {
 }
 
 if (violations.length > 0) {
+  logEvent('forbidden-imports', 'BLOCK', filePath, violations[0]);
   const result = {
     decision: 'block',
     reason: `Forbidden import violation:\n${violations.join('\n')}`,

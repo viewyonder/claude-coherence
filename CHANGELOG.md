@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2026-03-03
+
+### Added
+
+- **`/coherence history` sub-command.** View activity log, enable/disable logging, clear log, and show summaries. Supports `--on`, `--off`, `--clear`, `--open`, and `--last N` flags.
+- **Activity logging for hooks.** BLOCK and WARN decisions are logged to `.claude/coherence.log` when logging is enabled via a sentinel file (`.claude/coherence-log-enabled`). Opt-in, per-developer, gitignored.
+- **Shared `_log.cjs` utility.** Hooks require this module and call `logEvent()` at decision points. Handles sentinel check, log rotation (100KB threshold, keeps 500 lines), and `try/catch` safety.
+- Logging steps added to `check-principles`, `check-drift`, and `test-runner` sub-commands (SKILL-level log entries)
+- `.claude/.gitignore` to exclude `coherence.log` and `coherence-log-enabled` from version control
+- "What Happened" blog post explaining the rationale for activity logging
+
+### Changed
+
+- Updated `/coherence config` hook inventory to skip `_`-prefixed files (shared utilities)
+- Updated README sub-commands table to include `history`
+- Bump version to 1.6.0
+
 ## [1.5.0] - 2026-03-03
 
 ### Added

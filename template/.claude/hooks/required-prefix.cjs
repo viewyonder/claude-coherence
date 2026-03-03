@@ -32,6 +32,7 @@ const EXCEPTIONS = [
 // === END CONFIGURATION ===
 
 const fs = require('fs');
+const { logEvent } = require('./_log.cjs');
 
 const input = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
 const filePath = input.tool_input?.file_path || '';
@@ -69,6 +70,7 @@ while ((match = routePattern.exec(newContent)) !== null) {
 }
 
 if (violations.length > 0) {
+  logEvent('required-prefix', 'BLOCK', filePath, violations[0]);
   const result = {
     decision: 'block',
     reason: `Route prefix violation:\n${violations.map((v, i) => `${i + 1}. ${v}`).join('\n')}`,

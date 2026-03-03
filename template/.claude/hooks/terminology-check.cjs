@@ -67,6 +67,7 @@ const ENFORCEMENT = 'warn';
 // === END CONFIGURATION ===
 
 const fs = require('fs');
+const { logEvent } = require('./_log.cjs');
 
 const input = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
 const filePath = input.tool_input?.file_path || '';
@@ -100,6 +101,7 @@ for (const rule of TERMINOLOGY_RULES) {
 }
 
 if (violations.length > 0) {
+  logEvent('terminology-check', ENFORCEMENT === 'block' ? 'BLOCK' : 'WARN', filePath, `${violations.length} term(s) flagged`);
   if (ENFORCEMENT === 'block') {
     const result = {
       decision: 'block',

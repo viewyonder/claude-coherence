@@ -91,6 +91,7 @@ const SKIP_PATHS = [
 // === END CONFIGURATION ===
 
 const fs = require('fs');
+const { logEvent } = require('./_log.cjs');
 
 const input = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
 const filePath = input.tool_input?.file_path || '';
@@ -147,6 +148,7 @@ for (const rule of CITATION_RULES) {
 }
 
 if (blocks.length > 0) {
+  logEvent('style-guard', 'BLOCK', filePath, blocks[0]);
   const result = {
     decision: 'block',
     reason: `Style violation:\n${blocks.join('\n')}`,
@@ -156,6 +158,7 @@ if (blocks.length > 0) {
 }
 
 if (warnings.length > 0) {
+  logEvent('style-guard', 'WARN', filePath, `${warnings.length} style issue(s)`);
   const result = {
     message: `Style check:\n${warnings.join('\n')}`,
   };

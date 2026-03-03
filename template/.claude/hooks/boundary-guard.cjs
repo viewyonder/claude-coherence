@@ -45,6 +45,7 @@ const SKIP_SUFFIXES = ['.d.ts', 'types.ts', '.test.ts', '.spec.ts'];
 // === END CONFIGURATION ===
 
 const fs = require('fs');
+const { logEvent } = require('./_log.cjs');
 
 const input = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
 const filePath = input.tool_input?.file_path || '';
@@ -72,6 +73,7 @@ for (const guard of GUARDED_PATHS) {
 }
 
 if (violations.length > 0) {
+  logEvent('boundary-guard', 'BLOCK', filePath, violations[0].split('\n')[0]);
   const result = {
     decision: 'block',
     reason: `Boundary violation:\n${violations.map((v, i) => `${i + 1}. ${v}`).join('\n')}\n\nPrinciple: ${matchedPrinciple}`,

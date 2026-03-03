@@ -37,6 +37,7 @@ const SOURCE_EXT = '.ts';
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { logEvent } = require('./_log.cjs');
 
 const input = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
 const command = input.tool_input?.command || '';
@@ -116,6 +117,7 @@ function hasTest(sourceFile) {
 const missing = sourceFiles.filter(f => !hasTest(f));
 
 if (missing.length > 0) {
+  logEvent('test-gate', 'BLOCK', missing[0], `Missing tests for ${missing.length} file(s)`);
   const result = {
     error: `Test gate: commit blocked.\n\n` +
       `Missing tests for:\n${missing.map(f => `  - ${f}`).join('\n')}\n\n` +
