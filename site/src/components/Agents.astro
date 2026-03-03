@@ -34,8 +34,8 @@ const agents = [
 
 const skills = [
   {
-    command: '/coherence',
-    desc: 'Interactive setup wizard (alias for init)',
+    command: '/coherence init',
+    desc: 'Interactive setup wizard — generates hooks, agents, skills, CLAUDE.md',
   },
   {
     command: '/coherence check-principles',
@@ -48,6 +48,22 @@ const skills = [
   {
     command: '/coherence test-runner',
     desc: 'Run tests with flexible scope control',
+  },
+  {
+    command: '/coherence hook',
+    desc: 'List installed hooks with enforcement levels and status',
+  },
+  {
+    command: '/coherence spec',
+    desc: 'List SPEC documents with verification metadata',
+  },
+  {
+    command: '/coherence config',
+    desc: 'Show local project configuration — hooks, agents, skills, SPEC docs',
+  },
+  {
+    command: '/coherence history',
+    desc: 'View activity log, enable/disable logging',
   },
   {
     command: '/coherence status',
