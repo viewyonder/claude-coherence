@@ -5,16 +5,28 @@
   <div class="container nav-inner">
     <a href="/" class="nav-logo">
       <span class="logo-bracket">[</span>Coherence<span class="logo-bracket">]</span>
+      <span class="logo-byline">by Viewyonder</span>
     </a>
     <div class="nav-links">
       <a href="/guide">Guide</a>
       <a href="/getting-started">Get Started</a>
-      <a href="/plugins">Plugins</a>
-      <a href="/faq">FAQ</a>
-      <a href="/#architecture">Architecture</a>
-      <a href="/#hooks">Hooks</a>
-      <a href="/#examples">Examples</a>
-      <a href="/blog">Blog</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger">Docs <span class="dropdown-arrow">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="/plugins">Plugins</a>
+          <a href="/#architecture">Architecture</a>
+          <a href="/#hooks">Hooks</a>
+          <a href="/#examples">Examples</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger">More <span class="dropdown-arrow">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="/blog">Blog</a>
+          <a href="/faq">FAQ</a>
+          <a href="/changelog">Changelog</a>
+        </div>
+      </div>
       <a
         href="https://github.com/viewyonder/coherence"
         class="nav-github"
@@ -56,10 +68,20 @@
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-primary);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
   }
 
   .logo-bracket {
     color: var(--cyan);
+  }
+
+  .logo-byline {
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
   }
 
   .nav-links {
@@ -78,6 +100,65 @@
   .nav-links a:hover {
     color: var(--cyan);
     opacity: 1;
+  }
+
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown-trigger {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .nav-dropdown-trigger:hover {
+    color: var(--cyan);
+  }
+
+  .dropdown-arrow {
+    font-size: 0.65rem;
+    transition: transform 0.2s;
+  }
+
+  .nav-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-surface);
+    border: 1px solid rgba(0, 255, 240, 0.15);
+    border-radius: var(--radius);
+    padding: 0.5rem 0;
+    min-width: 10rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .nav-dropdown.open .nav-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-dropdown-menu a {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown-menu a:hover {
+    background: var(--bg-elevated);
   }
 
   .nav-github {
@@ -125,6 +206,24 @@
     .nav-toggle {
       display: flex;
     }
+
+    .nav-dropdown-menu {
+      position: static;
+      transform: none;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 0 0 0 1rem;
+      min-width: 0;
+    }
+
+    .nav-dropdown.open .nav-dropdown-menu {
+      display: flex;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: none;
+    }
   }
 </style>
 
@@ -134,8 +233,30 @@
   toggle?.addEventListener('click', () => {
     links?.classList.toggle('open');
   });
-  // Close on link click
+
+  // Dropdown toggles
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dropdown = btn.closest('.nav-dropdown');
+      // Close other dropdowns
+      document.querySelectorAll('.nav-dropdown.open').forEach(d => {
+        if (d !== dropdown) d.classList.remove('open');
+      });
+      dropdown?.classList.toggle('open');
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
+  });
+
+  // Close everything on link click
   links?.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => links?.classList.remove('open'));
+    a.addEventListener('click', () => {
+      links?.classList.remove('open');
+      document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
+    });
   });
 </script>

@@ -7,6 +7,7 @@
     <p class="hero-subtitle">
       <span class="typed" id="typed-subtitle"></span><span class="cursor"></span>
     </p>
+    <p class="hero-byline">A <a href="https://viewyonder.com" target="_blank" rel="noopener noreferrer">Viewyonder</a> product</p>
     <p class="hero-desc">
       A system of hooks, agents, skills, and specification documents that encode your project's
       architectural constraints into the Claude Code development loop.
@@ -50,6 +51,24 @@
     color: var(--cyan);
     margin-bottom: 2rem;
     min-height: 1.8em;
+  }
+
+  .hero-byline {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-byline a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .hero-byline a:hover {
+    color: var(--cyan);
   }
 
   .hero-desc {

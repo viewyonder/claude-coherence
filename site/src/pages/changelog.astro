@@ -1,0 +1,159 @@
+---
+import Base from '../layouts/Base.astro';
+import { changelog } from '../data/changelog';
+
+type DayGroup = { day: string; label: string; items: string[] };
+type MonthGroup = { key: string; label: string; days: DayGroup[] };
+
+const months: MonthGroup[] = [];
+const monthMap = new Map<string, MonthGroup>();
+
+for (const entry of changelog) {
+  const [y, m, d] = entry.date.split('-');
+  const monthKey = `${y}-${m}`;
+  const dayNum = parseInt(d, 10);
+
+  if (!monthMap.has(monthKey)) {
+    const monthDate = new Date(parseInt(y), parseInt(m) - 1);
+    const label = monthDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    const group: MonthGroup = { key: monthKey, label, days: [] };
+    monthMap.set(monthKey, group);
+    months.push(group);
+  }
+
+  const monthGroup = monthMap.get(monthKey)!;
+  let dayGroup = monthGroup.days.find(dg => dg.day === entry.date);
+  if (!dayGroup) {
+    const fullDate = new Date(parseInt(y), parseInt(m) - 1, dayNum);
+    const dayLabel = fullDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    dayGroup = { day: entry.date, label: dayLabel, items: [] };
+    monthGroup.days.push(dayGroup);
+  }
+
+  dayGroup.items.push(entry.text);
+}
+---
+
+<Base title="Changelog — Coherence by Viewyonder" description="A timeline of changes to Coherence for Claude.">
+  <article class="container changelog">
+    <header class="changelog-header">
+      <a href="/" class="back-link">&larr; Home</a>
+      <p class="section-label">Timeline</p>
+      <h1>Changelog</h1>
+      <p class="changelog-subtitle">
+        What changed and when.
+      </p>
+    </header>
+
+    <div class="timeline">
+      {months.map(month => (
+        <section class="month-group">
+          <h2 class="month-label">{month.label}</h2>
+          {month.days.map(day => (
+            <div class="day-group">
+              <div class="day-label">{day.label}</div>
+              <ul class="day-entries">
+                {day.items.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </section>
+      ))}
+    </div>
+  </article>
+</Base>
+
+<style>
+  .changelog {
+    padding-top: 7rem;
+    padding-bottom: 4rem;
+  }
+
+  .changelog-header {
+    margin-bottom: 3rem;
+  }
+
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .changelog-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    max-width: 50ch;
+  }
+
+  .timeline {
+    max-width: var(--content-width);
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--bg-elevated);
+  }
+
+  .month-group {
+    margin-bottom: 2.5rem;
+  }
+
+  .month-label {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cyan);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .month-label::before {
+    content: '';
+    position: absolute;
+    left: -1.85rem;
+    top: 0.45em;
+    width: 10px;
+    height: 10px;
+    background: var(--cyan);
+    border-radius: 50%;
+    border: 2px solid var(--bg-deep);
+  }
+
+  .day-group {
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+  }
+
+  .day-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .day-entries {
+    list-style: none;
+    padding: 0;
+  }
+
+  .day-entries li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  .day-entries li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 5px;
+    height: 5px;
+    background: var(--text-muted);
+    border-radius: 50%;
+  }
+</style>

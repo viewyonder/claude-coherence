@@ -8,14 +8,21 @@ Website: [coherence.viewyonder.com](https://coherence.viewyonder.com) | [Getting
 
 ---
 
-## Install (2 commands)
+## Install
+
+**Step 1.** Add the marketplace source (once per machine):
 
 ```
 /plugin marketplace add viewyonder/coherence
+```
+
+**Step 2.** Install the plugin into your project:
+
+```
 /plugin install coherence
 ```
 
-Then run `/coherence` in your project to launch the interactive setup wizard. It walks you through your stack, generates customized hooks, agents, skills, a `CLAUDE.md`, and `settings.local.json` — all tailored to your project.
+Then run `/coherence` to launch the interactive setup wizard. It walks you through your stack, generates customized hooks, agents, skills, a `CLAUDE.md`, and `settings.local.json` — all tailored to your project.
 
 ---
 
