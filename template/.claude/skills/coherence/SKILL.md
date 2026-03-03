@@ -1,6 +1,6 @@
 ---
 name: coherence
-description: Coherence guardrails system — init wizard, architecture review, drift detection, and test runner.
+description: Coherence guardrails system — init wizard, architecture review, drift detection, test runner, status, and uninstall.
 user_invocable: true
 arguments: "<sub-command> [options]"
 ---
@@ -8,6 +8,16 @@ arguments: "<sub-command> [options]"
 # /coherence
 
 Unified entry point for the Coherence guardrails system.
+
+## Constants
+
+| Name | Value | Description |
+|------|-------|-------------|
+| `REGISTRY_DIR` | `~/.claude/coherence` | Directory for Coherence global state |
+| `REGISTRY_FILE` | `~/.claude/coherence/repos.json` | Tracks repos where Coherence is installed |
+| `REGISTRY_VERSION` | `1` | Schema version for the registry file |
+| `PLUGIN_NAME` | `coherence` | Plugin name used in `enabledPlugins` and MCP entries |
+| `MARKETPLACE_PATTERN` | `viewyonder/coherence` or `viewyonder-coherence` | Patterns to match in `enabledPlugins` and `extraKnownMarketplaces` |
 
 ## Sub-commands
 
@@ -17,12 +27,15 @@ Unified entry point for the Coherence guardrails system.
 | `/coherence check-architecture [path]` | Architecture compliance review against CLAUDE.md principles |
 | `/coherence check-drift [scope]` | Compare SPEC docs against codebase to detect drift |
 | `/coherence test [scope]` | Run tests with flexible scope control |
+| `/coherence status [--prune]` | Show install state and registry contents |
+| `/coherence uninstall [--force]` | Remove Coherence from current repo (and optionally global) |
 | `/coherence help` | Show this help |
 
 ## Dispatch
 
 Parse the first argument to determine which sub-command to run.
 If no argument or `help`: show the sub-commands table above and stop.
+Aliases: `remove` and `unplug` map to `uninstall`.
 
 ---
 
@@ -590,9 +603,26 @@ After generating all files:
 Suggest next steps:
 - "Run `/coherence check-architecture` to validate your codebase against the new principles"
 - "Run `/coherence check-drift` to verify SPEC docs against the codebase"
+- "Run `/coherence status` to see the install state and registry"
 - "Edit `CLAUDE.md` to refine the principles for your specific needs"
 - "Review the hook configuration blocks (marked `// === CONFIGURATION ===`) to fine-tune patterns"
 - "Create SPEC documents in `docs/` for drift detection"
+
+---
+
+### Phase 7: Register
+
+After Phase 6 verification passes, register the repo in the global registry.
+
+1. Create `REGISTRY_DIR` (`~/.claude/coherence`) if it does not exist
+2. Read `REGISTRY_FILE` (`~/.claude/coherence/repos.json`). If missing or invalid JSON, initialize with `{ "version": 1, "repos": [] }`
+3. Upsert the current repo path (use `git rev-parse --show-toplevel` or `pwd` if not a git repo):
+   - If path already exists in `repos[]`, update `lastSeen` to current ISO timestamp
+   - If path is new, append `{ "path": "<repo-root>", "registeredAt": "<ISO timestamp>", "lastSeen": "<ISO timestamp>" }`
+4. Write the registry file back
+5. Inform the user: "Registered in Coherence repo registry (~/.claude/coherence/repos.json)"
+
+No confirmation needed — this is a non-destructive bookkeeping step.
 
 ---
 
@@ -734,3 +764,167 @@ Customize this table for your project:
 | **API** | `tests/api/` | API endpoint validation |
 | **Integration** | `tests/integration/` | Component interaction |
 | **E2E** | `tests/e2e/` | End-to-end tests |
+
+---
+
+## Sub-command: status
+
+Show the current Coherence install state — global plugin config, registered repos, and stale entries.
+
+### Usage
+
+```
+/coherence status              # Show install state
+/coherence status --prune      # Remove stale registry entries
+```
+
+### Instructions
+
+#### Step 1: Read Global State
+
+Check for Coherence presence in global Claude Code configuration:
+
+1. **Plugin registration** — Read `~/.claude/settings.json`. Look for `MARKETPLACE_PATTERN` in `enabledPlugins` array and `extraKnownMarketplaces` array. Report whether each is present.
+2. **MCP servers** — Read `~/.claude.json`. Look for any MCP server entries containing `PLUGIN_NAME`. Report whether present.
+
+If neither file exists, report "No global Coherence configuration found."
+
+#### Step 2: Read Registry
+
+1. Read `REGISTRY_FILE` (`~/.claude/coherence/repos.json`)
+2. If missing: report "No registry file found. Run `/coherence init` in a repo to create one."
+3. For each entry in `repos[]`:
+   - Check if the path still exists on disk (directory exists)
+   - Check if `.claude/` exists at that path
+   - Mark entries where the path no longer exists as **stale**
+
+#### Step 3: Prune (if `--prune`)
+
+If the `--prune` flag is passed:
+1. Remove all stale entries (paths that don't exist on disk) from `repos[]`
+2. Write the updated registry back to `REGISTRY_FILE`
+3. Report how many entries were removed
+
+#### Step 4: Report
+
+Present a structured report:
+
+```
+Coherence Status Report
+========================
+
+Global Install:
+  Plugin enabled:       yes/no
+  Marketplace listed:   yes/no
+  MCP servers:          N entries
+
+Registered Repos (N total, M stale):
+  ✓ /path/to/repo-1         registered 2026-01-15   last seen 2026-03-01
+  ✓ /path/to/repo-2         registered 2026-02-20   last seen 2026-03-03
+  ✗ /path/to/old-repo       registered 2026-01-01   STALE (path not found)
+
+Current repo: /path/to/current
+  Registered: yes/no
+  Hooks in settings.local.json: N entries
+```
+
+If stale entries exist and `--prune` was not passed, suggest: "Run `/coherence status --prune` to clean up stale entries."
+
+---
+
+## Sub-command: uninstall
+
+Remove Coherence hook registrations from the current repo and optionally clean up global configuration.
+
+**Aliases**: `remove`, `unplug`
+
+### Usage
+
+```
+/coherence uninstall           # Remove from current repo
+/coherence uninstall --force   # Remove from current repo + global cleanup regardless of other repos
+```
+
+### Important
+
+Uninstall does **NOT** delete `.claude/hooks/`, `.claude/agents/`, `.claude/skills/`, or `CLAUDE.md` — those contain user-customized content. It only cleans `settings.local.json` hook registrations and global config entries.
+
+### Instructions
+
+#### Step 1: Confirm Repo Path
+
+Determine the current repo root using `git rev-parse --show-toplevel` (fall back to `pwd`).
+Inform the user: "Uninstalling Coherence from: /path/to/repo"
+
+#### Step 2: Remove from Registry
+
+1. Read `REGISTRY_FILE`. If missing or invalid, skip this step with a note.
+2. Remove the entry matching the current repo path from `repos[]`.
+3. Write the updated registry back.
+
+#### Step 3: Clean Local settings.local.json
+
+1. Read `.claude/settings.local.json` in the current repo. If missing, skip with a note.
+2. Walk through `hooks.PreToolUse[]` and `hooks.PostToolUse[]` matchers.
+3. Remove any hook entry where the `command` string contains `.claude/hooks/` (Coherence-generated hooks).
+4. If a matcher's `hooks` array becomes empty after removal, remove the entire matcher object.
+5. If `PreToolUse` or `PostToolUse` arrays become empty, remove them.
+6. If the `hooks` object becomes empty, remove it.
+7. If the entire settings object becomes `{}`, delete the file.
+8. Otherwise, write the cleaned settings back.
+
+Report what was removed (e.g., "Removed 6 hook entries from settings.local.json").
+
+#### Step 4: Auto-Prune Stale Registry Entries
+
+After removing the current repo, also prune any stale entries (paths that don't exist on disk) from the registry. Report if any were pruned.
+
+#### Step 5: Check Remaining Repos
+
+Count remaining (non-stale) entries in the registry.
+
+- If remaining > 0 and `--force` was **not** passed:
+  - Show the remaining repos
+  - Inform: "Coherence is still installed in N other repo(s). Global config left intact."
+  - Suggest: "Run `/coherence uninstall --force` to remove global config regardless."
+  - **Stop here** — do not proceed to global cleanup.
+- If remaining == 0 or `--force` was passed: proceed to Step 6.
+
+#### Step 6: Global Cleanup
+
+Only reached when no repos remain in the registry, or `--force` was passed.
+
+1. **`~/.claude/settings.json`**: Remove any `enabledPlugins` entry matching `MARKETPLACE_PATTERN`. Remove any `extraKnownMarketplaces` entry matching `MARKETPLACE_PATTERN`. If either array becomes empty, remove the key. Write back.
+2. **`~/.claude.json`**: Remove any MCP server entries containing `PLUGIN_NAME`. Write back.
+3. **Registry**: Delete `REGISTRY_FILE` and `REGISTRY_DIR` (only if directory is empty after file deletion).
+
+Report each action taken.
+
+#### Step 7: Summary
+
+Present a structured summary:
+
+```
+Coherence Uninstall Summary
+=============================
+
+Local (repo: /path/to/repo):
+  settings.local.json:  cleaned (N hooks removed) / already clean / not found
+  Registry entry:       removed / not found
+
+Global:
+  enabledPlugins:       removed / skipped (N repos remain)
+  extraKnownMarketplaces: removed / skipped
+  MCP servers:          removed / skipped
+  Registry:             deleted / skipped
+
+Note: .claude/hooks/, .claude/agents/, .claude/skills/, and CLAUDE.md were
+left intact — they contain your customized guardrails configuration.
+```
+
+#### Edge Cases
+
+- **No `.claude/` directory**: Skip local cleanup, still remove from registry and check global.
+- **Missing or corrupt registry**: Proceed with local cleanup. Create a fresh registry if needed for removal tracking, or skip registry steps with a warning.
+- **Already-clean entries**: If `settings.local.json` has no Coherence hooks, report "already clean" rather than failing.
+- **`--force` with stale warnings**: Show stale entries that were pruned as part of the summary.
