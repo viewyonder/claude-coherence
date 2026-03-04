@@ -61,7 +61,7 @@ The rename touched 18 files across the repo:
 - CLAUDE.md — the four-layer architecture table and key conventions
 - README.md — the command table
 - All three SPEC documents — cross-references
-- Four site pages — getting-started, guide, agent cards, changelog
+- Four site pages — getting-started, wtf, agent cards, changelog
 - The site changelog data
 
 What *didn't* change: the `architecture-reviewer.md` agent file keeps its name. It *is* an architecture reviewer — that's its role, not its sub-command. The agent reviews architecture; the sub-command that invokes it checks principles. Different things, appropriately named.
