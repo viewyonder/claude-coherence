@@ -88,7 +88,7 @@ const EXAMPLES_DIR = join(ROOT, 'examples');
 
 const EXPECTED_SKILLS = [
   'check-drift', 'check-principles', 'config', 'help', 'history',
-  'hook', 'init', 'spec', 'status', 'test-runner', 'uninstall',
+  'hook', 'init', 'spec', 'status', 'test-runner',
 ];
 
 // ── 1. Plugin Skill Existence ────────────────────────────────────────

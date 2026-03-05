@@ -6,7 +6,7 @@
     {
       "name": "coherence",
       "description": "Architectural guardrails for Claude Code — init wizard, drift detection, architecture review, test runner, and more.",
-      "version": "1.10.0",
+      "version": "1.11.0",
       "source": "./plugins/coherence-plugin",
       "homepage": "https://coherence.viewyonder.com"
     }

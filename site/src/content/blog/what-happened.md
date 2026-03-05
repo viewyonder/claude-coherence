@@ -87,9 +87,9 @@ INFO-level hooks (test-suggest, change-suggest, state-flow suggestions) are not 
 
 ## The Sub-command Count
 
-With `history`, Coherence now has eleven sub-commands:
+With `history`, Coherence now has ten skills:
 
-| Command | What It Does |
+| Skill | What It Does |
 |---------|--------------|
 | `init` | Setup wizard |
 | `check-principles` | Architecture compliance review |
@@ -100,10 +100,9 @@ With `history`, Coherence now has eleven sub-commands:
 | `config` | Show project configuration |
 | `history` | View activity log |
 | `status` | Show install state |
-| `uninstall` | Remove Coherence |
-| `help` | Show available commands |
+| `help` | Show available skills |
 
-The pattern holds: every system concept gets a sub-command. Hooks have `hook`. Specs have `spec`. And now enforcement decisions have `history`.
+The pattern holds: every system concept gets a skill. Hooks have `hook`. Specs have `spec`. And now enforcement decisions have `history`.
 
 ---
 

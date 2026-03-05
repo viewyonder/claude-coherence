@@ -31,7 +31,7 @@ import Base from '../layouts/Base.astro';
         <div class="path-badge path-badge-recommended">Recommended</div>
         <h2>Install</h2>
         <p>
-          The Coherence plugin adds the <code>/coherence</code> command to Claude Code.
+          The Coherence plugin adds <code>/coherence:*</code> skills to Claude Code.
           It scans your project, asks a few questions, and generates a complete guardrails system —
           hooks, agents, skills, <code>CLAUDE.md</code>, and <code>settings.local.json</code> —
           customized to your stack.
@@ -66,12 +66,12 @@ import Base from '../layouts/Base.astro';
         <div class="callout callout-warn">
           <strong>Use user scope (the default).</strong>
           When Claude Code prompts you for a scope, choose <code>user</code> — or just press Enter to accept the default.
-          Coherence is designed to work across all your projects: you install the plugin once, then run <code>/coherence</code> in each repo to generate project-specific guardrails.
+          Coherence is designed to work across all your projects: you install the plugin once, then run <code>/coherence:init</code> in each repo to generate project-specific guardrails.
           If you install with <code>local</code> scope, the plugin is locked to a single project and you'll get an "already installed" error when you try to install it elsewhere.
           See <a href="/plugins#installing">Plugin scopes</a> for details.
         </div>
 
-        <h3>3. Run <code>/coherence init</code></h3>
+        <h3>3. Run <code>/coherence:init</code></h3>
         <p>Open Claude Code in your project and run:</p>
         <div class="terminal">
           <div class="terminal-header">
@@ -81,7 +81,7 @@ import Base from '../layouts/Base.astro';
             <span class="terminal-title">Claude Code</span>
           </div>
           <div class="terminal-body">
-            <span class="prompt">&gt;</span> /coherence init
+            <span class="prompt">&gt;</span> /coherence:init
           </div>
         </div>
 
@@ -150,7 +150,7 @@ import Base from '../layouts/Base.astro';
         </div>
 
         <div class="callout">
-          <strong>Idempotent.</strong> If you already have a <code>.claude/</code> directory, the wizard will ask whether to overwrite, merge, or abort. Use <code>/coherence --reset</code> to skip the prompt and overwrite.
+          <strong>Idempotent.</strong> If you already have a <code>.claude/</code> directory, the wizard will ask whether to overwrite, merge, or abort. Use <code>/coherence:init --reset</code> to skip the prompt and overwrite.
         </div>
       </section>
 
@@ -212,7 +212,7 @@ import Base from '../layouts/Base.astro';
             <h3>5. Create your first SPEC</h3>
             <p>
               Copy a SPEC template from <code>docs/</code>, fill in your actual components,
-              and run <code>/coherence check-drift</code> to verify.
+              and run <code>/coherence:check-drift</code> to verify.
             </p>
           </div>
         </details>
@@ -271,7 +271,7 @@ import Base from '../layouts/Base.astro';
           <div class="file-tree-item depth-2">drift-detector.md <span class="file-desc">— compare spec vs code</span></div>
           <div class="file-tree-item depth-1"><span class="file-icon">&#128193;</span> skills/</div>
           <div class="file-tree-item depth-2"><span class="file-icon">&#128193;</span> coherence/ <span class="file-desc">— /coherence command + sub-commands</span></div>
-          <div class="file-tree-item depth-3 file-muted">init &middot; check-principles &middot; check-drift &middot; test &middot; status &middot; uninstall &middot; help</div>
+          <div class="file-tree-item depth-3 file-muted">init &middot; check-principles &middot; check-drift &middot; test-runner &middot; status &middot; help</div>
         </div>
       </section>
 
@@ -279,7 +279,7 @@ import Base from '../layouts/Base.astro';
       <section id="project-types" class="guide-section">
         <h2>Supported Project Types</h2>
         <p>
-          <code>/coherence</code> adapts its output based on your project type.
+          <code>/coherence:init</code> adapts its output based on your project type.
           Each archetype generates different hooks, agents, and CLAUDE.md sections.
         </p>
 
@@ -357,15 +357,15 @@ import Base from '../layouts/Base.astro';
 
         <div class="next-steps-list">
           <div class="next-step">
-            <code>/coherence check-principles</code>
+            <code>/coherence:check-principles</code>
             <p>Check your code against the principles defined in the <code>## Architectural Principles</code> section of your <code>CLAUDE.md</code>. Run any time &mdash; after setup, after changes, or as a periodic audit. To update your principles, edit that section directly.</p>
           </div>
           <div class="next-step">
-            <code>/coherence check-drift</code>
+            <code>/coherence:check-drift</code>
             <p>After creating SPEC documents, run this to verify they match reality.</p>
           </div>
           <div class="next-step">
-            <code>/coherence status</code>
+            <code>/coherence:status</code>
             <p>See where Coherence is installed, check for stale registry entries, and verify global config.</p>
           </div>
           <div class="next-step">

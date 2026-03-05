@@ -10,7 +10,7 @@ All skill functionality is unified under a single `/coherence` command with sub-
 
 ## Components
 
-There is 1 skill with 10 sub-commands.
+There is 1 skill with 9 sub-commands.
 
 ### Sub-commands
 
@@ -24,7 +24,6 @@ There is 1 skill with 10 sub-commands.
 | `/coherence spec` | None (reads SPEC files) | List SPEC documents with verification metadata |
 | `/coherence config` | None (reads config files) | Show local project configuration overview |
 | `/coherence status [--prune]` | None (reads config files) | Show install state and registry contents |
-| `/coherence uninstall [--force]` | None (modifies config files) | Remove Coherence from current repo (and optionally global) |
 | `/coherence help` | None | Show available sub-commands |
 
 ### File Locations
@@ -89,7 +88,7 @@ These constraints are falsifiable — each can be verified mechanically.
 3. **Skill count**: There is 1 skill directory in `template/.claude/skills/` (coherence). Verified by: `ls -d template/.claude/skills/*/SKILL.md | wc -l` should return 1.
 4. **Plugin copy matches template**: The plugin copy and template copy are identical. Verified by: `diff template/.claude/skills/coherence/SKILL.md plugins/coherence-plugin/skills/coherence/SKILL.md` should produce no output.
 5. **Plugin metadata consistent**: `marketplace.json` and `plugin.json` both reference the same homepage URL. Verified by: `grep "homepage" marketplace.json plugins/coherence-plugin/.claude-plugin/plugin.json`.
-6. **Registry schema**: The registry file (`~/.claude/coherence/repos.json`) uses `{ "version": 1, "repos": [{ "path": "...", "registeredAt": "...", "lastSeen": "..." }] }`. Verified by: `init` creates this structure, `status` reads it, `uninstall` modifies it.
+6. **Registry schema**: The registry file (`~/.claude/coherence/repos.json`) uses `{ "version": 1, "repos": [{ "path": "...", "registeredAt": "...", "lastSeen": "..." }] }`. Verified by: `init` creates this structure, `status` reads it.
 
 ---
 

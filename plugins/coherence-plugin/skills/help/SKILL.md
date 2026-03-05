@@ -25,7 +25,6 @@ Show all available Coherence skills.
 | `/coherence:config` | | Show local project configuration — hooks, agents, skills, SPEC docs |
 | `/coherence:history` | `[--on \| --off \| --clear \| --last N]` | View activity log, enable/disable logging |
 | `/coherence:status` | `[--prune]` | Show global install state and registered repos |
-| `/coherence:uninstall` | `[--force] [--purge]` | Remove Coherence from current repo |
 | `/coherence:help` | | Show this help |
 
 ### Quick Start

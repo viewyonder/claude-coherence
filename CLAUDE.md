@@ -10,7 +10,7 @@ A template system for encoding architectural constraints into the Claude Code de
 
 - `template/` — The copyable template: `.claude/` directory (hooks, agents, skills, settings), `CLAUDE.md` template with `{{PLACEHOLDER}}` markers, SPEC and MEMORY doc templates
 - `examples/` — Two worked examples showing the template adapted to specific stacks (Express+PostgreSQL, Next.js+Prisma)
-- `blog/` — The "Entropy at Velocity" blog post explaining the rationale
+- `site/src/content/blog/` — Blog posts including "Entropy at Velocity" explaining the rationale
 
 ## The Four-Layer Architecture
 
@@ -47,7 +47,7 @@ No output = allowed. JSON output = blocked/warned.
 - Agents are read-only (Read, Grep, Glob, Bash only — no Write/Edit access)
 - SPEC documents make falsifiable claims ("we have 18 inspectors") not opinions ("our API is well-designed")
 - When adding a new hook: create the `.cjs` file, add a `// === CONFIGURATION ===` block, register it in `settings.local.json`
-- **Plugin skills** (in `plugins/coherence-plugin/skills/`) are split into individual skills: `init`, `check-principles`, `check-drift`, `test-runner`, `hook`, `spec`, `config`, `history`, `status`, `uninstall`, `help`. Invoked as `/coherence:init`, `/coherence:check-drift`, etc.
+- **Plugin skills** (in `plugins/coherence-plugin/skills/`) are split into individual skills: `init`, `check-principles`, `check-drift`, `test-runner`, `hook`, `spec`, `config`, `history`, `status`, `help`. Invoked as `/coherence:init`, `/coherence:check-drift`, etc.
 - **Template skill** (in `template/.claude/skills/coherence/`) remains a single monolithic skill with sub-command dispatch. Invoked as `/coherence init`, `/coherence check-drift`, etc. This is what gets installed into user projects.
 - Running `/coherence:init` (or `/coherence init` locally) inside this repo triggers dogfood mode — a read-only validation of templates, hooks, examples, and documentation accuracy
 - **Version bumps** must update all three locations: `plugins/coherence-plugin/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and a `v<version>` git tag on the release commit

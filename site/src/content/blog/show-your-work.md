@@ -70,13 +70,13 @@ Every SPEC document in Coherence carries a verification header — when it was l
 
 Both sub-commands are purely diagnostic. They don't modify configuration, don't run agents, don't write files. They read what's there and report it.
 
-This is deliberate. The existing sub-commands already cover modification: `init` generates, `uninstall` removes, `check-drift` detects problems. What was missing was the simple ability to see what you have — without needing to understand the file formats those other commands operate on.
+This is deliberate. The existing sub-commands already cover modification: `init` generates, `check-drift` detects problems. What was missing was the simple ability to see what you have — without needing to understand the file formats those other commands operate on.
 
 ## The Sub-command Count
 
-With `hook` and `spec`, Coherence now has eleven sub-commands:
+With `hook` and `spec`, Coherence now has ten skills:
 
-| Command | What It Does |
+| Skill | What It Does |
 |---------|--------------|
 | `init` | Setup wizard |
 | `check-principles` | Architecture compliance review |
@@ -87,10 +87,9 @@ With `hook` and `spec`, Coherence now has eleven sub-commands:
 | `config` | Show project configuration |
 | `history` | Show activity log |
 | `status` | Show install state |
-| `uninstall` | Remove Coherence |
-| `help` | Show available commands |
+| `help` | Show available skills |
 
-The pattern is consistent: every noun in the system (hooks, specs, repos) has a corresponding sub-command that lets you inspect it. If Coherence knows about it, you can ask Coherence to show it to you.
+The pattern is consistent: every noun in the system (hooks, specs, repos) has a corresponding skill that lets you inspect it. If Coherence knows about it, you can ask Coherence to show it to you.
 
 ---
 

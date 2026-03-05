@@ -107,7 +107,7 @@ import Base from '../layouts/Base.astro';
           <div class="layer-row">
             <div class="layer-name"><strong>Skills</strong></div>
             <div class="layer-purpose">Multi-step workflows with compliance built in</div>
-            <div class="layer-when">User-invoked (<code>/coherence check-drift</code>, etc.)</div>
+            <div class="layer-when">User-invoked (<code>/coherence:check-drift</code>, etc.)</div>
           </div>
         </div>
       </section>
@@ -124,7 +124,7 @@ import Base from '../layouts/Base.astro';
             <div class="lifecycle-badge lifecycle-once">once</div>
             <div class="lifecycle-detail">
               <strong>Install &amp; setup</strong>
-              <p>Install the plugin and run <code>/coherence init</code>. The wizard scans your project, asks a few questions, and generates everything &mdash; hooks, agents, skills, CLAUDE.md, and settings.</p>
+              <p>Install the plugin and run <code>/coherence:init</code>. The wizard scans your project, asks a few questions, and generates everything &mdash; hooks, agents, skills, CLAUDE.md, and settings.</p>
             </div>
           </div>
           <div class="lifecycle-step">
@@ -138,13 +138,13 @@ import Base from '../layouts/Base.astro';
             <div class="lifecycle-badge lifecycle-demand">on demand</div>
             <div class="lifecycle-detail">
               <strong>Skills run when you ask</strong>
-              <p>Run <code>/coherence check-drift</code> to compare SPEC docs against reality. Run <code>/coherence check-principles</code> to audit code against your principles. Use these periodically or before major changes.</p>
+              <p>Run <code>/coherence:check-drift</code> to compare SPEC docs against reality. Run <code>/coherence:check-principles</code> to audit code against your principles. Use these periodically or before major changes.</p>
             </div>
           </div>
         </div>
 
         <div class="callout">
-          <strong>Lifecycle summary:</strong> Install &rarr; Setup &rarr; Develop (hooks active) &rarr; Periodically check drift &rarr; Uninstall when done.
+          <strong>Lifecycle summary:</strong> Install &rarr; Setup &rarr; Develop (hooks active) &rarr; Periodically check drift.
         </div>
       </section>
 
@@ -257,56 +257,56 @@ import Base from '../layouts/Base.astro';
             <div class="lifecycle-badge lifecycle-scenario">fresh start</div>
             <div class="lifecycle-detail">
               <strong>New blank repo</strong>
-              <p>You're starting from scratch. Run <code>/coherence</code> &mdash; the wizard detects an empty project, asks what you're building, and generates everything. Hooks are active from your very first file.</p>
+              <p>You're starting from scratch. Run <code>/coherence:init</code> &mdash; the wizard detects an empty project, asks what you're building, and generates everything. Hooks are active from your very first file.</p>
             </div>
           </div>
           <div class="lifecycle-step">
             <div class="lifecycle-badge lifecycle-scenario">existing code</div>
             <div class="lifecycle-detail">
               <strong>Cloned repo (someone else's code)</strong>
-              <p>You've <code>git clone</code>'d a project and want guardrails. Run <code>/coherence init</code> &mdash; it scans the existing structure (package.json, frameworks, test setup) and generates constraints matched to what's already there. No SPEC files yet &mdash; that's fine. Hooks work immediately. Create SPECs later when you understand the architecture, then use <code>/coherence check-drift</code> to verify them.</p>
+              <p>You've <code>git clone</code>'d a project and want guardrails. Run <code>/coherence:init</code> &mdash; it scans the existing structure (package.json, frameworks, test setup) and generates constraints matched to what's already there. No SPEC files yet &mdash; that's fine. Hooks work immediately. Create SPECs later when you understand the architecture, then use <code>/coherence:check-drift</code> to verify them.</p>
             </div>
           </div>
           <div class="lifecycle-step">
             <div class="lifecycle-badge lifecycle-scenario">your project</div>
             <div class="lifecycle-detail">
               <strong>Your own existing repo</strong>
-              <p>You've been building this for a while. Run <code>/coherence</code> &mdash; it detects your stack and asks about the boundaries you already know matter. If you already have a <code>.claude/</code> directory, it asks whether to overwrite, merge, or abort. Use <code>--reset</code> to skip the prompt.</p>
+              <p>You've been building this for a while. Run <code>/coherence:init</code> &mdash; it detects your stack and asks about the boundaries you already know matter. If you already have a <code>.claude/</code> directory, it asks whether to overwrite, merge, or abort. Use <code>--reset</code> to skip the prompt.</p>
             </div>
           </div>
           <div class="lifecycle-step">
             <div class="lifecycle-badge lifecycle-scenario">first check</div>
             <div class="lifecycle-detail">
               <strong>First drift check (no SPECs yet)</strong>
-              <p>You've been developing with hooks active but haven't written SPEC docs. Run <code>/coherence init</code> again and say "yes" to SPEC generation (Phase 3, Q6). Then run <code>/coherence check-drift</code> to compare those SPECs against reality. This is your baseline &mdash; fix any gaps the first check surfaces.</p>
+              <p>You've been developing with hooks active but haven't written SPEC docs. Run <code>/coherence:init</code> again and say "yes" to SPEC generation (Phase 3, Q6). Then run <code>/coherence:check-drift</code> to compare those SPECs against reality. This is your baseline &mdash; fix any gaps the first check surfaces.</p>
             </div>
           </div>
           <div class="lifecycle-step">
             <div class="lifecycle-badge lifecycle-scenario">feature branch</div>
             <div class="lifecycle-detail">
               <strong>Feature branch workflow</strong>
-              <p>Create a branch, build your feature with hooks enforcing constraints throughout. Before merging, run <code>/coherence check-principles</code> to validate against principles. Run <code>/coherence check-drift</code> to make sure your changes haven't made SPECs stale. Merge with confidence.</p>
+              <p>Create a branch, build your feature with hooks enforcing constraints throughout. Before merging, run <code>/coherence:check-principles</code> to validate against principles. Run <code>/coherence:check-drift</code> to make sure your changes haven't made SPECs stale. Merge with confidence.</p>
             </div>
           </div>
           <div class="lifecycle-step">
             <div class="lifecycle-badge lifecycle-scenario">hotfix</div>
             <div class="lifecycle-detail">
               <strong>Quick fix straight to master</strong>
-              <p>Hooks still run on every edit &mdash; even a quick patch to master gets the same constraint checking. No ceremony needed. If you're making a small change, hooks catch violations inline. Run <code>/coherence check-principles</code> after if you want extra assurance.</p>
+              <p>Hooks still run on every edit &mdash; even a quick patch to master gets the same constraint checking. No ceremony needed. If you're making a small change, hooks catch violations inline. Run <code>/coherence:check-principles</code> after if you want extra assurance.</p>
             </div>
           </div>
           <div class="lifecycle-step">
             <div class="lifecycle-badge lifecycle-scenario">worktree</div>
             <div class="lifecycle-detail">
               <strong>Working in a worktree</strong>
-              <p>Worktrees (via Claude Code's <code>/worktree</code> or <code>git worktree</code>) give you an isolated copy of the repo. Your <code>.claude/</code> directory is part of the repo, so hooks and settings travel with the worktree automatically. No extra setup needed &mdash; <code>/coherence check-drift</code> and <code>/coherence check-principles</code> work the same in a worktree as in the main tree.</p>
+              <p>Worktrees (via Claude Code's <code>/worktree</code> or <code>git worktree</code>) give you an isolated copy of the repo. Your <code>.claude/</code> directory is part of the repo, so hooks and settings travel with the worktree automatically. No extra setup needed &mdash; <code>/coherence:check-drift</code> and <code>/coherence:check-principles</code> work the same in a worktree as in the main tree.</p>
             </div>
           </div>
           <div class="lifecycle-step">
             <div class="lifecycle-badge lifecycle-scenario">cleanup</div>
             <div class="lifecycle-detail">
               <strong>Removing Coherence from a repo</strong>
-              <p>Run <code>/coherence uninstall</code> to clean hook registrations from <code>settings.local.json</code> and remove the repo from the global registry. Your <code>.claude/hooks/</code>, agents, skills, and <code>CLAUDE.md</code> are left intact &mdash; they're your customized content. Add <code>--force</code> to also remove global plugin config regardless of other repos. Add <code>--purge</code> to delete all Coherence project files (hooks, agents, skills, SPEC docs) after confirmation. Use <code>/coherence status</code> first to see what's installed where.</p>
+              <p>Use Claude Code's built-in plugin management: <code>/plugin uninstall coherence</code> removes the plugin. To clean up generated files (<code>.claude/hooks/</code>, agents, skills, <code>settings.local.json</code>), delete them directly or ask Claude to help. Use <code>/coherence:status</code> first to see what's installed where.</p>
             </div>
           </div>
         </div>
@@ -327,14 +327,14 @@ import Base from '../layouts/Base.astro';
             <span class="prompt">&gt;</span> /plugin install coherence<br />
             <br />
             <span class="comment"># Run the wizard in any project</span><br />
-            <span class="prompt">&gt;</span> /coherence init
+            <span class="prompt">&gt;</span> /coherence:init
           </div>
         </div>
 
         <div class="callout callout-warn">
           <strong>Scope matters.</strong>
           When prompted for a scope, choose <code>user</code> (the default).
-          Coherence is a multi-repo tool &mdash; you install the plugin once at user scope, then run <code>/coherence</code> in each project to generate per-project guardrails.
+          Coherence is a multi-repo tool &mdash; you install the plugin once at user scope, then run <code>/coherence:init</code> in each project to generate per-project guardrails.
           Installing with <code>local</code> scope locks the plugin to a single project. You'll get an "already installed" error when you try to add it to a second repo.
         </div>
 

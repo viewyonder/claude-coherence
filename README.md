@@ -4,7 +4,7 @@
 
 A system of hooks, agents, skills, and specification documents that encode your project's architectural constraints into the Claude Code development loop. Instead of catching violations during review, they're caught at the moment of creation.
 
-Website: [coherence.viewyonder.com](https://coherence.viewyonder.com) | [Getting Started](https://coherence.viewyonder.com/getting-started) | [Entropy at Velocity](blog/entropy-at-velocity.md) (blog post)
+Website: [coherence.viewyonder.com](https://coherence.viewyonder.com) | [Getting Started](https://coherence.viewyonder.com/getting-started) | [Entropy at Velocity](https://coherence.viewyonder.com/blog/entropy-at-velocity) (blog post)
 
 ---
 
@@ -287,7 +287,7 @@ The `examples/` directory shows how the template adapts to different stacks:
 
 **Skills** are named multi-step workflows. `/coherence:check-drift` doesn't just run a grep — it invokes the drift-detector agent, which reads every SPEC document, compares against code, and produces a structured report.
 
-See [the blog post](blog/entropy-at-velocity.md) for the full rationale behind this approach.
+See [the blog post](https://coherence.viewyonder.com/blog/entropy-at-velocity) for the full rationale behind this approach.
 
 ---
 

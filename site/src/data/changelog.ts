@@ -3,6 +3,12 @@
  * Edit the `text` fields to be human-friendly — these are displayed as-is.
  */
 export const changelog = [
+  // --- 2026-03-05 (v1.11.0) ---
+  { date: '2026-03-05', text: 'Remove /coherence:uninstall skill — uninstalling is now handled through Claude Code\'s built-in plugin management UI' },
+  { date: '2026-03-05', text: 'Split plugin into individual /coherence:* skills (colon syntax replaces space-separated sub-commands for plugin users)' },
+  { date: '2026-03-05', text: 'Update all site pages and blog posts to use /coherence:skill format' },
+  { date: '2026-03-05', text: 'Add "Letting Go of the Lever" blog post on the uninstall removal and skill reorganization' },
+
   // --- 2026-03-04 (v1.7.0) ---
   { date: '2026-03-04', text: 'Add --purge flag to /coherence uninstall — delete all Coherence project files after confirmation' },
   { date: '2026-03-04', text: 'Add plugin cache cleanup to global uninstall (removes ~/.claude/plugins/cache/viewyonder-coherence)' },
