@@ -1,7 +1,7 @@
 {
   "name": "coherence",
   "description": "Interactive setup wizard that generates a complete .claude/ guardrails system customized to your project — hooks, agents, skills, CLAUDE.md, and settings.",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "author": {
     "name": "View Yonder",
     "email": "hello@viewyonder.com"

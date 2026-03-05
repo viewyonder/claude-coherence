@@ -37,6 +37,16 @@ Show all available Coherence skills.
 /coherence:config                        # See what's installed
 ```
 
+### Updating the Plugin
+
+To update Coherence to the latest version:
+
+```
+/plugin update coherence@viewyonder-coherence
+```
+
+You can also enable auto-updates for the marketplace so new versions are fetched on startup.
+
 ### Project-Local Skill
 
 When Coherence generates a `/coherence` skill into your project (via `/coherence:init`), that project-local skill uses sub-command dispatch: `/coherence check-drift`, `/coherence check-principles`, etc. The plugin uses the multi-skill `/coherence:<command>` syntax.
