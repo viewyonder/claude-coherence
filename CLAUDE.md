@@ -49,3 +49,4 @@ No output = allowed. JSON output = blocked/warned.
 - When adding a new hook: create the `.cjs` file, add a `// === CONFIGURATION ===` block, register it in `settings.local.json`
 - **Plugin skill** and **template skill** both use the same monolithic approach: a single `skills/coherence/SKILL.md` with sub-command dispatch. Invoked as `/coherence <sub-command>` (e.g., `/coherence init`, `/coherence check-drift`).
 - Running `/coherence init` inside this repo triggers dogfood mode — a read-only validation of templates, hooks, examples, and documentation accuracy
+- **Version bumps** must update all three locations: `plugins/coherence-plugin/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and a `v<version>` git tag on the release commit
