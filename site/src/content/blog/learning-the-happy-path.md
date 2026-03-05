@@ -6,9 +6,23 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — We're integrating [OpenClaw](https://openclaw.ai) with [Injectionator](https://injectionator.com) to protect users from prompt injection. OpenClaw is someone else's repo with strict conventions and architectural boundaries. We want to respect their guidelines, and [Coherence](https://coherence.viewyonder.com) helps us do that — generating hooks, agents, and SPEC documents that enforce the project's rules as Claude writes code.
+
 ## Contributing to Someone Else's Codebase
 
-We're building [Injectionator](https://github.com/viewyonder/injectionator) as an OpenClaw plugin to detect prompt injection attacks across all messaging channels. But before we wrote a single line of plugin code, we spent a session teaching Claude how the OpenClaw project works — using Coherence to generate architectural guardrails, specification documents, and enforcement hooks that keep Claude operating within the project's boundaries.
+We're building an integration plugin between [OpenClaw](https://openclaw.ai) and [Injectionator](https://injectionator.com) to help users protect themselves from prompt injections.
+
+But before we wrote a single line of plugin code, we spent a session teaching Claude how the OpenClaw project works — using Coherence to generate architectural guardrails, specification documents, and enforcement hooks that keep Claude operating within the project's boundaries.
+
+### What's in this post?
+
+- [The Setup Session](#the-setup-session) — running `/coherence:init` in the OpenClaw repo
+- [The Blocking Hook](#the-blocking-hook) — catching boundary violations at write time
+- [The Informational Hooks](#the-informational-hooks) — contextual nudges after edits
+- [How It's Wired](#how-its-wired) — `settings.local.json` registration
+- [SPEC Documents](#spec-documents-the-drift-detection-contract) — drift detection contracts
+- [Why This Matters for the Injectionator](#why-this-matters-for-the-injectionator) — the six hook points
+- [What We Learned](#what-we-learned) — verified SDK surface, active enforcement, shared vocabulary
 
 OpenClaw is a multi-channel AI gateway with 33 extension plugins, a plugin SDK with sub-path exports, a hook pipeline, and strict conventions documented in a 300+ line `CLAUDE.md`. The `extensions/` directory alone contains plugins for Discord, Telegram, Slack, Matrix, IRC, WhatsApp, Signal, iMessage, MS Teams, and many more.
 
