@@ -4,64 +4,77 @@
 <section id="examples">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">In Practice</p>
-      <h2 class="section-title">Two Worked Examples</h2>
+      <p class="section-label">In the Wild</p>
+      <h2 class="section-title">Real Projects Using Coherence</h2>
       <p class="section-desc">
-        The same template adapted to two different stacks, showing how hooks
-        and constraints change while the structure stays the same.
+        We used Coherence to build an integration plugin between OpenClaw and Injectionator —
+        contributing to someone else's codebase with architectural guardrails keeping Claude in bounds.
       </p>
 
       <div class="examples-grid grid-2">
         <div class="example-card card">
           <div class="example-header">
-            <h3>Express + PostgreSQL</h3>
-            <span class="example-tag">REST API</span>
+            <h3>OpenClaw Plugin</h3>
+            <span class="example-tag">Contributing to an external repo</span>
           </div>
+          <p class="example-desc">
+            OpenClaw is a multi-channel AI gateway with 33 extension plugins and strict conventions.
+            We ran <code>/coherence:init</code> to generate hooks that enforce plugin isolation —
+            blocking imports from core internals, requiring the plugin SDK, and keeping extensions self-contained.
+          </p>
           <div class="terminal">
             <div class="terminal-header">
               <span class="terminal-dot"></span>
               <span class="terminal-dot"></span>
               <span class="terminal-dot"></span>
-              <span class="terminal-title">CLAUDE.md</span>
+              <span class="terminal-title">plugin-boundary.cjs</span>
             </div>
             <div class="terminal-body">
-              <span class="comment"># Forbidden imports</span><br />
-              No eval(), no child_process in routes<br /><br />
-              <span class="comment"># Route prefix</span><br />
-              All routes: /api/v1/*<br /><br />
-              <span class="comment"># Data isolation</span><br />
-              PostgreSQL queries filter by org_id<br /><br />
-              <span class="comment"># Boundary</span><br />
-              Business logic in services/, not routes/
+              <span class="comment">// PreToolUse hook — fires on every Edit/Write</span><br />
+              <span class="comment">// inside extensions/</span><br /><br />
+              <span class="keyword">if</span> (importsFromCore) &#123;<br />
+              &nbsp;&nbsp;<span class="keyword">return</span> &#123;<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;decision: <span class="string">"block"</span>,<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;reason: <span class="string">"Use openclaw/plugin-sdk,<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not ../../src/agents/"</span><br />
+              &nbsp;&nbsp;&#125;<br />
+              &#125;
             </div>
           </div>
         </div>
 
         <div class="example-card card">
           <div class="example-header">
-            <h3>Next.js + Prisma</h3>
-            <span class="example-tag">Full Stack</span>
+            <h3>Injectionator Integration</h3>
+            <span class="example-tag">Prompt injection protection</span>
           </div>
+          <p class="example-desc">
+            The Injectionator scans prompts for injection attacks. We wired it into OpenClaw's
+            hook pipeline at six points — covering user messages, tool responses, system prompts,
+            and more. SPEC documents tracked each integration point as a falsifiable claim.
+          </p>
           <div class="terminal">
             <div class="terminal-header">
               <span class="terminal-dot"></span>
               <span class="terminal-dot"></span>
               <span class="terminal-dot"></span>
-              <span class="terminal-title">CLAUDE.md</span>
+              <span class="terminal-title">SPEC-HOOKS.md</span>
             </div>
             <div class="terminal-body">
-              <span class="comment"># Forbidden imports</span><br />
-              No Prisma in client components<br /><br />
-              <span class="comment"># Server/client boundary</span><br />
-              'use server' in server actions<br /><br />
-              <span class="comment"># Data isolation</span><br />
-              Prisma queries filter by teamId<br /><br />
-              <span class="comment"># Boundary</span><br />
-              Prisma only in lib/db/
+              <span class="comment"># Hook Integration Points</span><br /><br />
+              <span class="status-ok">CURRENT</span> &nbsp;beforeRequest hook<br />
+              <span class="status-ok">CURRENT</span> &nbsp;afterResponse hook<br />
+              <span class="status-ok">CURRENT</span> &nbsp;toolCall hook<br />
+              <span class="status-drift">DRIFTED</span> &nbsp;systemPrompt hook<br />
+              <span class="comment"># ^ Agent flags this for review</span>
             </div>
           </div>
         </div>
       </div>
+
+      <p class="example-cta">
+        <a href="/blog/learning-the-happy-path">Read the full case study &rarr;</a>
+      </p>
     </div>
   </div>
 </section>
@@ -71,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.75rem;
   }
 
   .example-header h3 {
@@ -80,10 +93,64 @@
 
   .example-tag {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     background: var(--bg-surface);
     padding: 0.2em 0.6em;
     border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+
+  .example-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+
+  .example-desc code {
+    font-size: 0.85em;
+    background: var(--bg-surface);
+    padding: 0.15em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+
+  .keyword {
+    color: var(--cyan);
+  }
+
+  .string {
+    color: var(--green);
+  }
+
+  .status-ok {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .status-drift {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--amber);
+    font-weight: 600;
+  }
+
+  .example-cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .example-cta a {
+    color: var(--cyan);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .example-cta a:hover {
+    border-bottom-color: var(--cyan);
   }
 </style>
