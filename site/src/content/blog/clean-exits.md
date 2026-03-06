@@ -6,8 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-*Why every plugin needs an uninstall story — and how Coherence v1.3 closes the lifecycle gap.*
-
 > **Update (v1.11.0):** The `/coherence uninstall` skill described in this post has been removed. Uninstalling is now handled through Claude Code's built-in plugin management UI (`/plugin uninstall coherence`). The repo registry and `/coherence:status` remain. See [Letting Go of the Lever](letting-go-of-the-lever.md) for the reasoning.
 
 ---

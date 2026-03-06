@@ -6,10 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-*A new `/coherence config` sub-command that shows everything installed in one view.*
-
----
-
 ## Seeing the Forest
 
 Coherence has sub-commands for inspecting individual parts of a project. `/coherence hook` shows hooks. `/coherence spec` shows SPEC documents. `/coherence status` shows the global registry. Each answers a specific question well.

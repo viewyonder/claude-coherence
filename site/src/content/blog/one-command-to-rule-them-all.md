@@ -6,10 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-*Why we consolidated four slash commands into `/coherence` with sub-commands — and what it means for your workflow.*
-
----
-
 ## The Problem with Four Commands
 
 Coherence v1.1 shipped with four separate slash commands:

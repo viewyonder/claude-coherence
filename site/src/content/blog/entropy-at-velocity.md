@@ -6,12 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-# Entropy at Velocity
-
-*How AI-assisted development shifts the bottleneck from writing code to keeping it coherent — and what you can do about it.*
-
----
-
 ## The Constraint Shift
 
 For most of software engineering's history, the bottleneck was writing code. Not thinking about it, not designing it — *writing* it. The mechanical act of translating intention into syntax, spread across files, tested, debugged, committed. That's where most of the clock burned.

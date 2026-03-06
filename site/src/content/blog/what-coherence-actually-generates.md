@@ -6,12 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-# What Coherence Actually Generates
-
-*A security SaaS with 18 inspectors, 5 SPECs, and strict tenant isolation — here's what `/coherence:init` produced and what it catches.*
-
----
-
 ## From the Field
 
 We talk a lot about what Coherence *can* do. Here's what it *did* — for a real project, in production, over two months of daily use.

@@ -6,10 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-*When grep can't find what you're looking for — because the code uses different words than the spec.*
-
----
-
 ## The Vocabulary Gap
 
 Here's a scenario that plays out constantly in drift detection.

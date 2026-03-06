@@ -6,12 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-# Clearing the Fog
-
-*How ten skills answer the four questions every AI-assisted project eventually asks.*
-
----
-
 ## The Fog
 
 AI-assisted development solved the throughput problem. Code flows faster than it ever has. But throughput without visibility creates a new kind of problem — one that doesn't feel like a bug, because nothing is broken. It feels like fog.

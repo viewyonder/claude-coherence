@@ -6,10 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-*Why we renamed `check-architecture` to `check-principles` — and what the distinction reveals about how guardrails actually work.*
-
----
-
 ## The Confusion
 
 Coherence has two check sub-commands:

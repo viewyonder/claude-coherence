@@ -6,12 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-# What Happened
-
-*A new `/coherence history` sub-command that logs hook decisions and lets you spot patterns.*
-
----
-
 ## The Blind Spot
 
 Coherence hooks fire constantly. Every file edit, every write, every commit attempt runs through the hook chain. Blocks and warnings appear inline and then scroll away. If you're paying attention at the moment, you see them. If you're not, they're gone.

@@ -40,6 +40,10 @@ echo '{"tool_input":{"file_path":"/src/test.ts","content":"require(\"fs\")"}}' |
 
 No output = allowed. JSON output = blocked/warned.
 
+## Blog Posts
+
+- **Do not repeat the title or tagline in the body.** The front matter `title` and `subtitle` fields are rendered by the site layout. When importing content from external sources, strip any leading H1 or tagline that duplicates the front matter before publishing.
+
 ## Key Conventions
 
 - The `template/CLAUDE.md` uses `{{PLACEHOLDER}}` markers that adopters replace with their project values

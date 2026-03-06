@@ -6,12 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-# Show Your Work
-
-*Two new `/coherence` sub-commands that answer "what's installed?" without reading JSON.*
-
----
-
 ## The Inspection Gap
 
 Coherence generates a lot of configuration. Hooks get registered in `settings.local.json`. SPEC documents accumulate in `docs/`. After a few weeks of iteration, the natural question is: what do I actually have installed?

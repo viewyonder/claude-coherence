@@ -6,12 +6,6 @@ author: "Injectionator"
 draft: false
 ---
 
-# Letting Go of the Lever
-
-*Why we removed `/coherence uninstall` and embraced Claude Code's native plugin UI.*
-
----
-
 ## The Urge to Own Everything
 
 When you build a plugin, there's a natural urge to own the entire lifecycle. Install, configure, inspect, remove — all under your roof, all using your commands. We gave in to that urge in v1.3 when we shipped `/coherence uninstall`. It was thorough. It handled local cleanup, global cleanup, registry management, `--force` for multi-repo edge cases, `--purge` for full file deletion. We even added aliases — `remove` and `unplug` — because we wanted every intuitive word to work.
