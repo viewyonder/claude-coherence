@@ -1,0 +1,109 @@
+---
+---
+
+<section id="docs">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Useful Docs</p>
+      <h2 class="section-title">Go Deeper</h2>
+      <p class="section-desc">
+        Guides and references for getting the most out of Coherence.
+      </p>
+
+      <div class="docs-grid">
+
+        <a href="/getting-started" class="doc-card">
+          <div class="doc-icon">&#9654;</div>
+          <div class="doc-content">
+            <h3>Getting Started</h3>
+            <p>Step-by-step setup guide &mdash; from install to your first guardrails.</p>
+          </div>
+        </a>
+
+        <a href="/scope" class="doc-card">
+          <div class="doc-icon">&#9673;</div>
+          <div class="doc-content">
+            <h3>Scope & Lifecycle</h3>
+            <p>How user, project, and session scopes interact across repos and terminals.</p>
+          </div>
+        </a>
+
+        <a href="/plugins" class="doc-card">
+          <div class="doc-icon">&#9881;</div>
+          <div class="doc-content">
+            <h3>Plugin Reference</h3>
+            <p>All 10 plugin skills &mdash; commands, arguments, and output formats.</p>
+          </div>
+        </a>
+
+        <a href="/reference" class="doc-card">
+          <div class="doc-icon">&#9776;</div>
+          <div class="doc-content">
+            <h3>File Map & Uninstall</h3>
+            <p>Every file Coherence touches, organized by scope, plus removal steps.</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .doc-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-mid);
+    border: 1px solid var(--bg-surface);
+    border-radius: var(--radius);
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+
+  .doc-card:hover {
+    border-color: rgba(0, 255, 240, 0.3);
+    background: var(--bg-surface);
+  }
+
+  .doc-icon {
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--cyan);
+    border: 1px solid rgba(0, 255, 240, 0.2);
+    border-radius: 6px;
+    background: rgba(0, 255, 240, 0.05);
+  }
+
+  .doc-content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+    color: var(--text-primary);
+  }
+
+  .doc-content p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .docs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

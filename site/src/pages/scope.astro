@@ -1,0 +1,633 @@
+---
+import Base from '../layouts/Base.astro';
+import BottomCTA from '../components/BottomCTA.astro';
+---
+
+<Base title="Scope & Lifecycle — Coherence by Viewyonder" description="Where things live, when they activate, and what each session can see. Understand how user, project, and session scopes interact.">
+  <article class="container guide">
+    <header class="guide-header">
+      <a href="/" class="back-link">&larr; Home</a>
+      <p class="section-label">Guide</p>
+      <h1>Scope & Lifecycle</h1>
+      <p class="guide-subtitle">
+        Where things live, when they activate, and what each session can see.
+      </p>
+    </header>
+
+    <nav class="toc">
+      <p class="toc-title">On this page</p>
+      <ul>
+        <li><a href="#diagram">How the layers fit together</a></li>
+        <li><a href="#marketplace">1. Add the marketplace</a></li>
+        <li><a href="#install">2. Install the plugin</a></li>
+        <li><a href="#restart">3. Restart Claude Code</a></li>
+        <li><a href="#init">4. Run /coherence:init</a></li>
+        <li><a href="#other-sessions">5. Other sessions</a></li>
+        <li><a href="#other-repos">6. A different repo</a></li>
+        <li><a href="#teammates">7. Teammates</a></li>
+        <li><a href="#quick-reference">Quick reference</a></li>
+        <li><a href="#confusion">Common confusion points</a></li>
+      </ul>
+    </nav>
+
+    <div class="prose">
+
+      <!-- ============================================ -->
+      <section id="diagram" class="guide-section">
+        <h2>How the Layers Fit Together</h2>
+
+        <div class="scope-diagram">
+          <div class="scope-layer scope-user">
+            <div class="scope-label"><span class="scope-badge scope-badge-user">USER</span> ~/.claude/</div>
+            <div class="scope-desc">All repos, all sessions</div>
+            <div class="scope-files">
+              <code>settings.json</code> <span class="file-note">marketplace source + enabled plugins</span><br />
+              <code>plugins/cache/viewyonder-coherence/</code> <span class="file-note">cached plugin code + skills</span>
+            </div>
+
+            <div class="scope-layer scope-project">
+              <div class="scope-label"><span class="scope-badge scope-badge-project">PROJECT</span> ~/your-project/</div>
+              <div class="scope-desc">This repo only</div>
+              <div class="scope-files">
+                <code>.claude/hooks/</code> <span class="file-note">enforcement hooks</span><br />
+                <code>.claude/agents/</code> <span class="file-note">review agents</span><br />
+                <code>.claude/skills/coherence/</code> <span class="file-note">local skill dispatcher</span><br />
+                <code>.claude/settings.local.json</code> <span class="file-note">hook registrations</span><br />
+                <code>CLAUDE.md</code> <span class="file-note">project instructions</span><br />
+                <code>docs/SPEC-*.md</code> <span class="file-note">architectural specs</span>
+              </div>
+
+              <div class="scope-layer scope-session">
+                <div class="scope-label"><span class="scope-badge scope-badge-session">SESSION</span> Claude Code instance</div>
+                <div class="scope-desc">This terminal only</div>
+                <div class="scope-files">
+                  Loads <code>~/.claude/settings.json</code> <span class="file-note">sees plugin skills</span><br />
+                  Loads <code>.claude/settings.local.json</code> <span class="file-note">sees hooks + local skills</span><br />
+                  <span class="file-note">Must restart to pick up changes to either scope</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="marketplace" class="guide-section">
+        <h2>1. Add the Marketplace</h2>
+        <p class="scope-tag"><span class="scope-badge scope-badge-user">USER</span> scope</p>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-title">Claude Code</span>
+          </div>
+          <div class="terminal-body">
+            <span class="prompt">&gt;</span> /plugin marketplace add viewyonder/coherence
+          </div>
+        </div>
+
+        <p>
+          Writes an entry to <code>~/.claude/settings.json</code> under
+          <code>extraKnownMarketplaces</code>. This tells Claude Code where to find Coherence.
+          Applies to every session and every repo on this machine.
+        </p>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="install" class="guide-section">
+        <h2>2. Install the Plugin</h2>
+        <p class="scope-tag"><span class="scope-badge scope-badge-user">USER</span> scope &mdash; the default</p>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-title">Claude Code</span>
+          </div>
+          <div class="terminal-body">
+            <span class="prompt">&gt;</span> /plugin install coherence
+          </div>
+        </div>
+
+        <p>
+          Downloads the plugin to <code>~/.claude/plugins/cache/viewyonder-coherence/</code>
+          and adds it to <code>enabledPlugins</code> in <code>~/.claude/settings.json</code>.
+          User scope is the default &mdash; the plugin is available in every repo without re-installing.
+        </p>
+
+        <div class="callout">
+          <strong>Install also enables.</strong> There is no separate enable step.
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="restart" class="guide-section">
+        <h2>3. Restart Claude Code</h2>
+        <p class="scope-tag"><span class="scope-badge scope-badge-session">SESSION</span> scope</p>
+
+        <p>
+          Plugin skills won't appear until the session reloads its plugin registry.
+          The safest way is to <code>/exit</code> and relaunch Claude Code.
+          You can also try <code>/reload-plugins</code> if available in your version,
+          but a full restart is the reliable path.
+        </p>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="init" class="guide-section">
+        <h2>4. Run <code>/coherence:init</code></h2>
+        <p class="scope-tag"><span class="scope-badge scope-badge-project">PROJECT</span> scope</p>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-title">Claude Code</span>
+          </div>
+          <div class="terminal-body">
+            <span class="prompt">&gt;</span> /coherence:init
+          </div>
+        </div>
+
+        <p>
+          This is the only step that writes to the current repo. It creates
+          <code>.claude/hooks/</code>, <code>.claude/agents/</code>, <code>.claude/skills/</code>,
+          <code>.claude/settings.local.json</code>, <code>CLAUDE.md</code>, and optionally
+          <code>docs/SPEC-*.md</code> &mdash; all customized to your project's stack.
+        </p>
+        <p>
+          Nothing touches other repos. Nothing touches <code>~/.claude/</code> beyond
+          what the install step already did.
+        </p>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="other-sessions" class="guide-section">
+        <h2>5. Other Sessions in the Same Repo</h2>
+
+        <p>If you open a second terminal in the same repo:</p>
+
+        <ul class="check-list">
+          <li><strong>Plugin skills</strong> (<code>/coherence:check-drift</code>, etc.) work immediately if the plugin is installed and that session has loaded it (started after steps 2&ndash;3).</li>
+          <li><strong>Hooks</strong> activate automatically &mdash; they're registered in <code>.claude/settings.local.json</code>, which every session reads from the repo.</li>
+          <li><strong>If skills are missing</strong>, restart that session. The plugin registry is loaded at session start.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="other-repos" class="guide-section">
+        <h2>6. A Different Repo</h2>
+
+        <p>
+          The plugin is installed at user scope, so <code>/coherence:init</code>,
+          <code>/coherence:help</code>, and other plugin skills are available in any repo.
+          But no hooks, agents, or SPEC docs exist until you run <code>/coherence:init</code>
+          in that repo.
+        </p>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="teammates" class="guide-section">
+        <h2>7. Teammates</h2>
+
+        <p>
+          Teammates install the plugin independently (steps 1&ndash;3). If your team commits
+          the <code>.claude/</code> directory, they get hooks and agents immediately. If
+          <code>.claude/</code> is gitignored, each teammate runs <code>/coherence:init</code>
+          in their own checkout.
+        </p>
+        <p>
+          The plugin itself is never shared via git &mdash; it's always per-user.
+        </p>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="quick-reference" class="guide-section">
+        <h2>Quick Reference</h2>
+
+        <div class="ref-table-wrap">
+          <table class="ref-table">
+            <thead>
+              <tr><th>Action</th><th>Scope</th><th>What It Affects</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Add marketplace</td>
+                <td><span class="scope-badge scope-badge-user">USER</span></td>
+                <td><code>~/.claude/settings.json</code> &mdash; all repos</td>
+              </tr>
+              <tr>
+                <td>Install plugin</td>
+                <td><span class="scope-badge scope-badge-user">USER</span></td>
+                <td><code>~/.claude/plugins/cache/</code> + <code>enabledPlugins</code> &mdash; all repos</td>
+              </tr>
+              <tr>
+                <td>Restart session</td>
+                <td><span class="scope-badge scope-badge-session">SESSION</span></td>
+                <td>Loads updated plugin registry</td>
+              </tr>
+              <tr>
+                <td><code>/coherence:init</code></td>
+                <td><span class="scope-badge scope-badge-project">PROJECT</span></td>
+                <td>Creates <code>.claude/</code>, <code>CLAUDE.md</code>, <code>docs/</code> &mdash; this repo only</td>
+              </tr>
+              <tr>
+                <td>Edit a hook</td>
+                <td><span class="scope-badge scope-badge-project">PROJECT</span></td>
+                <td><code>.claude/hooks/</code> &mdash; this repo only</td>
+              </tr>
+              <tr>
+                <td>Edit SPEC docs</td>
+                <td><span class="scope-badge scope-badge-project">PROJECT</span></td>
+                <td><code>docs/SPEC-*.md</code> &mdash; this repo only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <section id="confusion" class="guide-section">
+        <h2>Common Confusion Points</h2>
+
+        <div class="faq-items">
+
+          <div class="faq-item">
+            <h3>"I installed the plugin but skills don't show up."</h3>
+            <p>Restart Claude Code. The plugin registry is loaded once at session start.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>"My other terminal doesn't have the plugin skills."</h3>
+            <p>That session was started before the plugin was installed. Restart it.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>"I ran init in one repo but my other project doesn't have hooks."</h3>
+            <p><code>/coherence:init</code> is project-scoped. Run it in each repo that needs Coherence.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>"Should I install as user scope or project scope?"</h3>
+            <p>
+              User scope (the default). This makes plugin skills available everywhere.
+              The project-specific files are created by <code>/coherence:init</code>,
+              not by the plugin install.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>"Will this affect my teammate's setup?"</h3>
+            <p>
+              No. The plugin install is per-user (<code>~/.claude/</code>).
+              Project files in <code>.claude/</code> can be committed to git if your team
+              wants shared hooks, but each person installs the plugin independently.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>"I updated the plugin but don't see new skills."</h3>
+            <p>Restart Claude Code to reload the plugin cache.</p>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </article>
+  <BottomCTA />
+</Base>
+
+<style>
+  .guide {
+    padding-top: 7rem;
+    padding-bottom: 4rem;
+  }
+
+  .guide-header {
+    margin-bottom: 3rem;
+  }
+
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .guide-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    max-width: 50ch;
+  }
+
+  /* Table of contents */
+  .toc {
+    background: var(--bg-mid);
+    border: 1px solid var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+    max-width: 500px;
+  }
+
+  .toc-title {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .toc li {
+    margin-bottom: 0.4rem;
+  }
+
+  .toc a {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .toc a:hover {
+    color: var(--cyan);
+    opacity: 1;
+  }
+
+  /* Sections */
+  .guide-section {
+    padding: 0;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .guide-section h2 {
+    margin-bottom: 1rem;
+  }
+
+  .guide-section h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .guide-section p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  /* Scope diagram */
+  .scope-diagram {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .scope-layer {
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .scope-user {
+    background: var(--bg-mid);
+    border: 1px solid rgba(0, 255, 240, 0.2);
+  }
+
+  .scope-project {
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 0, 170, 0.2);
+  }
+
+  .scope-session {
+    background: var(--bg-elevated);
+    border: 1px solid rgba(255, 136, 68, 0.2);
+  }
+
+  .scope-label {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .scope-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .scope-files {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+  }
+
+  .scope-files code {
+    font-size: 0.8rem;
+    background: rgba(0, 255, 240, 0.06);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+  }
+
+  .file-note {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+
+  /* Scope badges */
+  .scope-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+  }
+
+  .scope-badge-user {
+    background: rgba(0, 255, 240, 0.12);
+    color: var(--cyan);
+    border: 1px solid rgba(0, 255, 240, 0.3);
+  }
+
+  .scope-badge-project {
+    background: rgba(255, 0, 170, 0.12);
+    color: var(--magenta);
+    border: 1px solid rgba(255, 0, 170, 0.3);
+  }
+
+  .scope-badge-session {
+    background: rgba(255, 136, 68, 0.12);
+    color: var(--orange);
+    border: 1px solid rgba(255, 136, 68, 0.3);
+  }
+
+  .scope-tag {
+    margin-bottom: 1rem;
+  }
+
+  /* Checklist */
+  .check-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .check-list li {
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+  }
+
+  .check-list li::before {
+    content: "\25B8";
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-size: 0.8rem;
+  }
+
+  .check-list li strong {
+    color: var(--text-primary);
+  }
+
+  /* FAQ items */
+  .faq-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: var(--bg-mid);
+    border: 1px solid var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .faq-item h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .faq-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  /* Reference tables */
+  .ref-table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--bg-surface);
+  }
+
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .ref-table thead {
+    background: var(--bg-surface);
+  }
+
+  .ref-table th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: left;
+    padding: 0.6rem 1rem;
+  }
+
+  .ref-table td {
+    padding: 0.55rem 1rem;
+    border-top: 1px solid var(--bg-surface);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .ref-table code {
+    font-size: 0.8rem;
+    background: rgba(0, 255, 240, 0.06);
+    color: var(--text-primary);
+  }
+
+  /* Callout */
+  .callout {
+    background: var(--bg-mid);
+    border-left: 3px solid var(--cyan);
+    padding: 1rem 1.25rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .callout strong {
+    color: var(--text-primary);
+  }
+
+  /* Terminal blocks */
+  .terminal {
+    background: var(--bg-deep);
+    border: 1px solid var(--bg-surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 0.75rem 0 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  .terminal-header {
+    background: var(--bg-surface);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .terminal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    opacity: 0.5;
+  }
+
+  .terminal-title {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  .terminal-body {
+    padding: 1rem;
+    line-height: 1.8;
+  }
+
+  .terminal-body .prompt {
+    color: var(--cyan);
+    user-select: none;
+    margin-right: 0.5rem;
+  }
+</style>
