@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — "What does my Coherence setup actually look like?" One command, one view. `/coherence config` cross-references hook files against `settings.local.json`, surfaces orphans and missing registrations, and shows every agent, skill, and SPEC document in your project.
+
 ## Seeing the Forest
 
 Coherence has sub-commands for inspecting individual parts of a project. `/coherence hook` shows hooks. `/coherence spec` shows SPEC documents. `/coherence status` shows the global registry. Each answers a specific question well.

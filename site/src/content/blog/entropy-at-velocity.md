@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — AI didn't mass-produce bugs. It mass-produced *drift*. When code flows ten times faster, the bottleneck shifts from writing it to keeping it coherent — and your current review process can't keep up. We break down why obvious solutions fail and introduce a four-layer system that encodes architectural constraints directly into the generation loop.
+
 ## The Constraint Shift
 
 For most of software engineering's history, the bottleneck was writing code. Not thinking about it, not designing it — *writing* it. The mechanical act of translating intention into syntax, spread across files, tested, debugged, committed. That's where most of the clock burned.

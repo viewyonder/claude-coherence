@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — Your spec says "input validation." Your code uses `schema.parse()`, `assertParams()`, and `checkPayload`. Grep finds none of them. That's not drift — it's a vocabulary gap, and it poisons every drift report with false positives. QMD's semantic search bridges the gap by matching *concepts*, not strings, and Coherence now uses it automatically when available.
+
 ## The Vocabulary Gap
 
 Here's a scenario that plays out constantly in drift detection.

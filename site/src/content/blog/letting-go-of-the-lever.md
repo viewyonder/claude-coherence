@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — We built a thorough, well-designed uninstall command — and then deleted it. Destructive operations shouldn't be interpreted by an LLM when the platform already handles them deterministically. Skills are for judgment; plumbing should be mechanical.
+
 ## The Urge to Own Everything
 
 When you build a plugin, there's a natural urge to own the entire lifecycle. Install, configure, inspect, remove — all under your roof, all using your commands. We gave in to that urge in v1.3 when we shipped `/coherence uninstall`. It was thorough. It handled local cleanup, global cleanup, registry management, `--force` for multi-repo edge cases, `--purge` for full file deletion. We even added aliases — `remove` and `unplug` — because we wanted every intuitive word to work.

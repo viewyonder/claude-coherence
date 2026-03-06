@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — Fast tooling that doesn't report back creates fog, not velocity. Coherence's ten skills aren't a feature list — they're an instrument panel answering four questions: *Where am I? What do I have? What happened? Am I still on track?* Here's how they fit together.
+
 ## The Fog
 
 AI-assisted development solved the throughput problem. Code flows faster than it ever has. But throughput without visibility creates a new kind of problem — one that doesn't feel like a bug, because nothing is broken. It feels like fog.

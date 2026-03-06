@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — Guardrails that can't prove they ran are guardrails that get questioned. Coherence hooks now log every BLOCK and WARN decision, and `/coherence history` surfaces the patterns — so you can tell whether your hooks are doing real work or just creating noise.
+
 ## The Blind Spot
 
 Coherence hooks fire constantly. Every file edit, every write, every commit attempt runs through the hook chain. Blocks and warnings appear inline and then scroll away. If you're paying attention at the moment, you see them. If you're not, they're gone.

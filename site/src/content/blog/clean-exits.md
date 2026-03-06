@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — If you respect users enough to build a setup wizard, you should respect them enough to build a teardown. Coherence v1.3 added a repo registry, a status command, and a registry-aware uninstall — closing the lifecycle gap that every plugin eventually hits.
+
 > **Update (v1.11.0):** The `/coherence uninstall` skill described in this post has been removed. Uninstalling is now handled through Claude Code's built-in plugin management UI (`/plugin uninstall coherence`). The repo registry and `/coherence:status` remain. See [Letting Go of the Lever](letting-go-of-the-lever.md) for the reasoning.
 
 ---

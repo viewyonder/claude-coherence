@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — We renamed `check-architecture` to `check-principles` — one string, 18 files, zero behavioral change. Why bother? Because in a system where the command name *is* the interface, a misleading name sends users to the wrong tool. Drift detection is forensic; principles checking is evaluative. The old name hid that distinction.
+
 ## The Confusion
 
 Coherence has two check sub-commands:

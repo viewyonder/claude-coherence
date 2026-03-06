@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — Four separate slash commands meant four things to remember and no way to discover them from the inside. We consolidated everything under `/coherence` with sub-commands — one entry point, self-documenting, and a single generated skill file instead of three.
+
 ## The Problem with Four Commands
 
 Coherence v1.1 shipped with four separate slash commands:

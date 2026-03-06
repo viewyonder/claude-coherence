@@ -6,6 +6,8 @@ author: "Injectionator"
 draft: false
 ---
 
+> **TL;DR** — If you can't see what's installed without reading JSON, you'll eventually forget what you have. Two new read-only sub-commands — `/coherence hook` and `/coherence spec` — show your active hooks and SPEC documents at a glance, including orphans and missing files.
+
 ## The Inspection Gap
 
 Coherence generates a lot of configuration. Hooks get registered in `settings.local.json`. SPEC documents accumulate in `docs/`. After a few weeks of iteration, the natural question is: what do I actually have installed?
