@@ -6,7 +6,7 @@ A system of hooks, agents, skills, and specification documents that encode your 
 
 Website: [coherence.viewyonder.com](https://coherence.viewyonder.com) | [Getting Started](https://coherence.viewyonder.com/getting-started) | [Entropy at Velocity](https://coherence.viewyonder.com/blog/entropy-at-velocity) (blog post)
 
-**Docs:** [SPEC — Hooks](docs/SPEC-HOOKS.md) | [SPEC — Skills](docs/SPEC-SKILLS.md) | [SPEC — Agents](docs/SPEC-AGENTS.md) | [SPEC — Template](docs/SPEC-TEMPLATE.md) | [Reference (file map + uninstall)](docs/REFERENCE.md)
+**Docs:** [SPEC — Hooks](docs/SPEC-HOOKS.md) | [SPEC — Skills](docs/SPEC-SKILLS.md) | [SPEC — Agents](docs/SPEC-AGENTS.md) | [SPEC — Template](docs/SPEC-TEMPLATE.md) | [Reference (file map + uninstall)](docs/REFERENCE.md) | [Scope & Lifecycle](docs/SCOPE-AND-LIFECYCLE.md)
 
 ---
 
@@ -18,13 +18,15 @@ Website: [coherence.viewyonder.com](https://coherence.viewyonder.com) | [Getting
 /plugin marketplace add viewyonder/coherence
 ```
 
-**Step 2.** Install the plugin into your project:
+**Step 2.** Install the plugin (user scope — the default):
 
 ```
 /plugin install coherence
 ```
 
-Then run `/coherence:init` to launch the interactive setup wizard. It walks you through your stack, generates customized hooks, agents, skills, a `CLAUDE.md`, and `settings.local.json` — all tailored to your project.
+Then restart Claude Code and run `/coherence:init` to launch the interactive setup wizard. It walks you through your stack, generates customized hooks, agents, skills, a `CLAUDE.md`, and `settings.local.json` — all tailored to your project.
+
+> See [Scope & Lifecycle](docs/SCOPE-AND-LIFECYCLE.md) for how scopes, sessions, and repos interact.
 
 ---
 
@@ -50,8 +52,9 @@ cp /path/to/coherence/template/docs/MEMORY.md docs/
 Then customize manually:
 
 1. **CLAUDE.md** — Replace `{{PLACEHOLDER}}` markers with your project's values
-2. **Hooks** — Edit the `// === CONFIGURATION ===` block at the top of each hook in `.claude/hooks/`. Remove hooks that don't apply and update `settings.local.json` accordingly.
-3. **SPEC docs** — Copy `docs/SPEC-TEMPLATE.md` to something like `docs/SPEC-API-SURFACE.md`, fill in your actual components, and run `/coherence check-drift` (project-local) or `/coherence:check-drift` (plugin) to verify.
+2. **Hooks** — Edit the `// === CONFIGURATION ===` block at the top of each hook in `.claude/hooks/`. Remove hooks that don't apply and remove their entries from `.claude/settings.local.json` to match.
+3. **Settings** — Review `.claude/settings.local.json` to confirm it references only the hooks you kept. This file registers hooks with Claude Code — without it, hooks won't run.
+4. **SPEC docs** — Copy `docs/SPEC-TEMPLATE.md` to something like `docs/SPEC-API-SURFACE.md`, fill in your actual components, and run `/coherence check-drift` (project-local) or `/coherence:check-drift` (plugin) to verify.
 
 ---
 
@@ -92,7 +95,7 @@ Then customize manually:
 | `security-auditor` | OWASP-focused vulnerability detection |
 | `consistency-reviewer` | Terminology, voice, and structural consistency |
 
-### Skills (11 commands)
+### Skills (10 commands)
 
 When installed as a plugin, each command is a separate skill invoked with colon syntax:
 
@@ -107,7 +110,6 @@ When installed as a plugin, each command is a separate skill invoked with colon 
 | `/coherence:config` | Inspection | Unified overview of entire `.claude/` setup |
 | `/coherence:history [options]` | Logging | View/control activity log |
 | `/coherence:status [--prune]` | Global | Show global install state and repo registry |
-| `/coherence:uninstall [--force] [--purge]` | Global | Remove Coherence from current repo |
 | `/coherence:help` | Meta | Show available commands |
 
 > **Project-local skill**: When installed into a project (via `/coherence:init` or manual copy), the skill uses sub-command dispatch with space syntax: `/coherence init`, `/coherence check-drift`, etc.
@@ -238,18 +240,6 @@ Registered Repos (2 total, 0 stale):
   ✓ /path/to/repo-1         registered 2026-01-15
   ✓ /path/to/repo-2         registered 2026-02-20
 ```
-
-### `/coherence:uninstall [--force] [--purge]`
-
-Remove Coherence hook registrations from the current repo. Does **not** delete `.claude/hooks/`, `.claude/agents/`, `.claude/skills/`, or `CLAUDE.md` — those contain your customizations. Use `--purge` to also delete project files.
-
-```
-/coherence:uninstall                     # Remove from current repo
-/coherence:uninstall --force             # Also remove global config
-/coherence:uninstall --purge             # Also delete project files
-```
-
-If other repos still use Coherence, global config is left intact unless `--force` is passed.
 
 ### `/coherence:help`
 

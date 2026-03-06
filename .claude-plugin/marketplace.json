@@ -10,7 +10,7 @@
       "name": "coherence",
       "source": "./plugins/coherence-plugin",
       "description": "Interactive setup wizard that generates a complete .claude/ guardrails system customized to your project — hooks, agents, skills, CLAUDE.md, and settings.",
-      "version": "1.12.2",
+      "version": "1.12.3",
       "category": "development",
       "tags": ["guardrails", "setup", "hooks", "architecture"]
     }
