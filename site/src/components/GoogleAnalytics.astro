@@ -1,0 +1,15 @@
+---
+// Google Analytics (gtag.js) - Measurement ID: G-6WQENHCM9S
+// Only loads in production to avoid polluting analytics with dev traffic
+const isProd = import.meta.env.PROD;
+---
+
+{isProd && <script is:inline src="https://www.googletagmanager.com/gtag/js?id=G-6WQENHCM9S" async></script>}
+{isProd && (
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6WQENHCM9S');
+  </script>
+)}
